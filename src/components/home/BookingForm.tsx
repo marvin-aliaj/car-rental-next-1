@@ -1,0 +1,150 @@
+"use client";
+import { useEffect } from 'react';
+import { z } from 'zod';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+
+const searchSchema = z.object({
+  pickupLocation: z.string().min(1, { message: "Please select a pickup location" }),
+  pickupDate: z.string().min(1, { message: "Please select a pickup date" }),
+  returnDate: z.string().min(1, { message: "Please select a return date" }),
+});
+
+type SearchFormValues = z.infer<typeof searchSchema>;
+
+export default function BookingForm() {
+  const form = useForm<SearchFormValues>({
+    resolver: zodResolver(searchSchema),
+    defaultValues: {
+      pickupLocation: "",
+      pickupDate: "",
+      returnDate: "",
+    },
+  });
+  // const { data: locations } = useQuery<Location[]>({
+  //   queryKey: ['/api/locations'],
+  // });
+
+  useEffect(() => {
+    // Set default dates (today and tomorrow)
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    
+    form.setValue('pickupDate', formatDateForInput(today));
+    form.setValue('returnDate', formatDateForInput(tomorrow));
+  }, [form]);
+
+  const formatDateForInput = (date: Date): string => {
+    return date.toISOString().split('T')[0];
+  };
+
+  const onSubmit = (values: SearchFormValues) => {
+    // Navigate to cars page with search parameters
+    // navigate(`/cars?pickup=${values.pickupLocation}&start=${values.pickupDate}&end=${values.returnDate}`);
+    console.log(values);
+  };
+
+  return (
+    <section id="booking-form" className="py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-white rounded-lg shadow-lg -mt-16 md:-mt-24 relative z-10 p-6">
+          <h2 className="text-2xl font-bold text-neutral-800 mb-6">Quick Booking</h2>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {/*<FormField*/}
+                {/*  control={form.control}*/}
+                {/*  name="pickupLocation"*/}
+                {/*  render={({ field }) => (*/}
+                {/*    <FormItem>*/}
+                {/*      <FormLabel className="text-sm font-medium text-neutral-700">Pick-up Location</FormLabel>*/}
+                {/*      <FormControl>*/}
+                {/*        <div className="relative">*/}
+                {/*          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">*/}
+                {/*            <i className="fas fa-map-marker-alt text-neutral-500"></i>*/}
+                {/*          </div>*/}
+                {/*          <Select onValueChange={field.onChange} defaultValue={field.value}>*/}
+                {/*            <SelectTrigger className="pl-10 pr-10 py-2 text-base border-neutral-300">*/}
+                {/*              <SelectValue placeholder="Select a location" />*/}
+                {/*            </SelectTrigger>*/}
+                {/*            <SelectContent>*/}
+                {/*              {locations?.map((location) => (*/}
+                {/*                <SelectItem key={location.id} value={location.id.toString()}>*/}
+                {/*                  {location.name}*/}
+                {/*                </SelectItem>*/}
+                {/*              ))}*/}
+                {/*            </SelectContent>*/}
+                {/*          </Select>*/}
+                {/*        </div>*/}
+                {/*      </FormControl>*/}
+                {/*      <FormMessage />*/}
+                {/*    </FormItem>*/}
+                {/*  )}*/}
+                {/*/>*/}
+                
+                <FormField
+                  control={form.control}
+                  name="pickupDate"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-medium text-neutral-700">Pick-up Date</FormLabel>
+                      <FormControl>
+                        <div className="relative">
+                          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i className="fas fa-calendar text-neutral-500"></i>
+                          </div>
+                          <Input
+                            type="date"
+                            className="pl-10 pr-10 py-2 text-base border-neutral-300"
+                            {...field}
+                          />
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                
+                <FormField
+                  control={form.control}
+                  name="returnDate"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-medium text-neutral-700">Return Date</FormLabel>
+                      <FormControl>
+                        <div className="relative">
+                          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i className="fas fa-calendar text-neutral-500"></i>
+                          </div>
+                          <Input
+                            type="date"
+                            className="pl-10 pr-10 py-2 text-base border-neutral-300"
+                            {...field}
+                          />
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              
+              <div className="flex justify-end">
+                <Button 
+                  type="submit" 
+                  className="bg-primary hover:bg-primary/90 text-white font-medium rounded-md px-6 py-3 text-center shadow-md transition duration-300 ease-in-out"
+                >
+                  Search Available Cars
+                </Button>
+              </div>
+            </form>
+          </Form>
+        </div>
+      </div>
+    </section>
+  );
+}
