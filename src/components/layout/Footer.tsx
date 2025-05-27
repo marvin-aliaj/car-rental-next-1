@@ -1,109 +1,94 @@
 "use client";
 import Link from "next/link";
+import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 
 export default function Footer() {
   return (
     <footer className="bg-neutral-800 text-neutral-200 py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           <div>
             <h3 className="font-bold text-white text-lg mb-4">AutoRental</h3>
             <p className="text-neutral-400 mb-4">
-              Providing quality car rentals since 2010. Our mission is to offer convenient, reliable, and affordable transportation options for every journey.
+              Providing quality car rentals since 2010. Our mission is to offer
+              convenient, reliable, and affordable transportation options for
+              every journey.
             </p>
-            <div className="flex space-x-4">
-              <a href="#" className="text-neutral-400 hover:text-white transition-colors duration-300">
-                <i className="fab fa-facebook-f"></i>
+            <div className="flex space-x-3">
+              <a
+                href="#"
+                className="text-neutral-400 hover:text-white transition-colors duration-300"
+              >
+                <FaFacebook />
               </a>
-              <a href="#" className="text-neutral-400 hover:text-white transition-colors duration-300">
-                <i className="fab fa-twitter"></i>
+              <a
+                href="#"
+                className="text-neutral-400 hover:text-white transition-colors duration-300"
+              >
+                <FaTwitter />
               </a>
-              <a href="#" className="text-neutral-400 hover:text-white transition-colors duration-300">
-                <i className="fab fa-instagram"></i>
-              </a>
-              <a href="#" className="text-neutral-400 hover:text-white transition-colors duration-300">
-                <i className="fab fa-linkedin-in"></i>
+              <a
+                href="#"
+                className="text-neutral-400 hover:text-white transition-colors duration-300"
+              >
+                <FaInstagram />
               </a>
             </div>
           </div>
-          
+
           <div>
             <h3 className="font-bold text-white text-lg mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li>
                 <Link href="/">
-                  <span className="text-neutral-400 hover:text-white transition-colors duration-300">Home</span>
+                  <span className="text-neutral-400 hover:text-white transition-colors duration-300">
+                    Home
+                  </span>
                 </Link>
               </li>
               <li>
                 <Link href="/about">
-                  <span className="text-neutral-400 hover:text-white transition-colors duration-300">About Us</span>
+                  <span className="text-neutral-400 hover:text-white transition-colors duration-300">
+                    About Us
+                  </span>
                 </Link>
               </li>
               <li>
                 <Link href="/cars">
-                  <span className="text-neutral-400 hover:text-white transition-colors duration-300">Cars</span>
+                  <span className="text-neutral-400 hover:text-white transition-colors duration-300">
+                    Cars
+                  </span>
                 </Link>
               </li>
               <li>
                 <Link href="/locations">
-                  <span className="text-neutral-400 hover:text-white transition-colors duration-300">Locations</span>
+                  <span className="text-neutral-400 hover:text-white transition-colors duration-300">
+                    Locations
+                  </span>
                 </Link>
               </li>
               <li>
-                <Link href="/pricing">
-                  <span className="text-neutral-400 hover:text-white transition-colors duration-300">Pricing</span>
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact">
-                  <span className="text-neutral-400 hover:text-white transition-colors duration-300">Contact</span>
+                <Link href="/contact-us">
+                  <span className="text-neutral-400 hover:text-white transition-colors duration-300">
+                    Contact
+                  </span>
                 </Link>
               </li>
             </ul>
           </div>
-          
+
           <div>
-            <h3 className="font-bold text-white text-lg mb-4">Customer Support</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link href="/faq">
-                  <span className="text-neutral-400 hover:text-white transition-colors duration-300">FAQs</span>
-                </Link>
-              </li>
-              <li>
-                <Link href="/help">
-                  <span className="text-neutral-400 hover:text-white transition-colors duration-300">Help Center</span>
-                </Link>
-              </li>
-              <li>
-                <Link href="/how-to-book">
-                  <span className="text-neutral-400 hover:text-white transition-colors duration-300">How to Book</span>
-                </Link>
-              </li>
-              <li>
-                <Link href="/terms">
-                  <span className="text-neutral-400 hover:text-white transition-colors duration-300">Rental Terms</span>
-                </Link>
-              </li>
-              <li>
-                <Link href="/insurance">
-                  <span className="text-neutral-400 hover:text-white transition-colors duration-300">Insurance & Protection</span>
-                </Link>
-              </li>
-            </ul>
-          </div>
-          
-          <div>
-            <h3 className="font-bold text-white text-lg mb-4">Contact Information</h3>
+            <h3 className="font-bold text-white text-lg mb-4">
+              Contact Information
+            </h3>
             <ul className="space-y-2 text-neutral-400">
               <li className="flex items-start">
                 <i className="fas fa-map-marker-alt mt-1 mr-3"></i>
-                <span>123 Main Street, San Francisco, CA 94105, USA</span>
+                <span>Sheshi Liria, Durrës 2001, Albania</span>
               </li>
               <li className="flex items-center">
                 <i className="fas fa-phone-alt mr-3"></i>
-                <span>+1 (555) 123-4567</span>
+                <span>+355 123-4567</span>
               </li>
               <li className="flex items-center">
                 <i className="fas fa-envelope mr-3"></i>
@@ -116,18 +101,16 @@ export default function Footer() {
             </ul>
           </div>
         </div>
-        
+
         <div className="mt-12 pt-8 border-t border-neutral-700 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-neutral-400 text-sm">&copy; {new Date().getFullYear()} AutoRental. All rights reserved.</p>
+          <p className="text-neutral-400 text-sm">
+            &copy; {new Date().getFullYear()} AutoRental. All rights reserved.
+          </p>
           <div className="mt-4 md:mt-0 flex flex-wrap gap-4 text-sm text-neutral-400">
-            <Link href="/privacy">
-              <span className="hover:text-white transition-colors duration-300">Privacy Policy</span>
-            </Link>
-            <Link href="/terms">
-              <span className="hover:text-white transition-colors duration-300">Terms of Service</span>
-            </Link>
-            <Link href="/cookies">
-              <span className="hover:text-white transition-colors duration-300">Cookie Policy</span>
+            <Link href="#faq">
+              <span className="hover:text-white transition-colors duration-300">
+                Customer Support
+              </span>
             </Link>
           </div>
         </div>

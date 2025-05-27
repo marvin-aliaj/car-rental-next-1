@@ -1,8 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import {usePathname} from "next/navigation";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -19,69 +18,102 @@ export default function Header() {
   const isActive = (path: string) => {
     return pathName === path;
   };
-
+  const navItems = [
+    { path: "/", name: "Home" },
+    { path: "/cars", name: "Cars" },
+    { path: "/locations", name: "Locations" },
+  ];
   return (
-    <header className="bg-white shadow-sm sticky top-0 z-50">
+    <header className="backdrop-blur-md bg-[rgba(21,24,27,0.8)] border-b border-gray-800 text-gray-100 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
-          <div className="flex">
-            <div className="flex-shrink-0 flex items-center">
+          <div className="flex gap-8 items-center">
+            {/* Logo */}
+            <div className="flex-shrink-0">
               <Link href="/">
-                <span className="text-primary font-bold text-xl cursor-pointer">AutoRental</span>
+                <div className="flex items-center space-x-2 cursor-pointer group">
+                  <div className="w-8 h-8 bg-gradient-to-br from-gray-600 to-gray-800 rounded-lg flex items-center justify-center text-white font-bold group-hover:from-gray-500 group-hover:to-gray-700 transition-all duration-300 shadow-md group-hover:shadow-lg group-active:scale-95">
+                    C
+                  </div>
+                  <span className="text-xl font-bold text-gray-200 hover:text-white transition-colors duration-300">
+                    CarRental
+                  </span>
+                </div>
               </Link>
             </div>
-            <nav className="hidden sm:ml-6 sm:flex sm:space-x-8">
-              <Link href="/">
-                <span className={`${isActive("/") ? "border-primary text-primary" : "border-transparent text-neutral-600 hover:border-neutral-300 hover:text-neutral-800"} border-b-2 px-1 pt-1 inline-flex items-center text-sm font-medium`}>
-                  Home
-                </span>
-              </Link>
-              <Link href="/cars">
-                <span className={`${isActive("/cars") ? "border-primary text-primary" : "border-transparent text-neutral-600 hover:border-neutral-300 hover:text-neutral-800"} border-b-2 px-1 pt-1 inline-flex items-center text-sm font-medium`}>
-                  Cars
-                </span>
-              </Link>
-              <Link href="/locations">
-                <span className={`${isActive("/locations") ? "border-primary text-primary" : "border-transparent text-neutral-600 hover:border-neutral-300 hover:text-neutral-800"} border-b-2 px-1 pt-1 inline-flex items-center text-sm font-medium`}>
-                  Locations
-                </span>
-              </Link>
-              <Link href="/deals">
-                <span className={`${isActive("/deals") ? "border-primary text-primary" : "border-transparent text-neutral-600 hover:border-neutral-300 hover:text-neutral-800"} border-b-2 px-1 pt-1 inline-flex items-center text-sm font-medium`}>
-                  Deals
-                </span>
-              </Link>
+
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex items-center space-x-1">
+              {navItems.map((item) => (
+                <Link href={item.path} key={item.path}>
+                  <div className="relative px-4 py-2 group">
+                    <span
+                      className={`relative z-10 ${
+                        isActive(item.path)
+                          ? "text-white font-medium"
+                          : "text-gray-400 hover:text-white"
+                      } transition-colors duration-300`}
+                    >
+                      {item.name}
+                    </span>
+                    {isActive(item.path) && (
+                      <div className="absolute bottom-0 left-0 right-0 bg-white rounded-full origin-left animate-underline"></div>
+                    )}
+                    <div
+                      className={`absolute bottom-0 left-0 right-0 bg-white rounded-full scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ${
+                        isActive(item.path) ? "hidden" : ""
+                      }`}
+                    ></div>
+                  </div>
+                </Link>
+              ))}
             </nav>
           </div>
-          <div className="hidden sm:ml-6 sm:flex sm:items-center">
-            <Button variant="outline" className="ml-3">
-              <Link href="/cars">
-                <span className="text-neutral-600 hover:text-neutral-800 text-sm font-medium">
-                  Browse Cars
-                </span>
-              </Link>
-            </Button>
-          </div>
-          <div className="-mr-2 flex items-center sm:hidden">
+
+          {/* Mobile Menu Button */}
+          <div className="md:hidden flex items-center">
             <button
-              id="mobile-menu-button"
-              type="button"
-              className="inline-flex items-center justify-center p-2 rounded-md text-neutral-600 hover:text-neutral-800 hover:bg-neutral-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary"
-              onClick={toggleMenu}
+              onClick={() => toggleMenu()}
+              className="p-2 rounded-lg hover:bg-gray-800 focus:outline-none transition-colors duration-300"
+              aria-label="Toggle menu"
             >
-              <span className="sr-only">Open main menu</span>
-              <i className="fas fa-bars"></i>
+              <div className="w-6 flex flex-col items-center">
+                <span
+                  className={`block h-0.5 w-6 bg-gray-300 rounded-full transition-all duration-300 ${
+                    isMenuOpen
+                      ? "rotate-45 translate-y-1.5"
+                      : "-translate-y-0.5"
+                  }`}
+                ></span>
+                <span
+                  className={`block h-0.5 w-6 bg-gray-300 rounded-full mt-1.5 transition-all duration-300 ${
+                    isMenuOpen ? "opacity-0" : "opacity-100"
+                  }`}
+                ></span>
+                <span
+                  className={`block h-0.5 w-6 bg-gray-300 rounded-full mt-1.5 transition-all duration-300 ${
+                    isMenuOpen
+                      ? "-rotate-45 -translate-y-1.5"
+                      : "translate-y-0.5"
+                  }`}
+                ></span>
+              </div>
             </button>
           </div>
         </div>
       </div>
 
+      {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="sm:hidden">
+        <div className="md:hidden bg-gray-900 border-t border-gray-800">
           <div className="pt-2 pb-3 space-y-1">
             <Link href="/">
               <span
-                className={`${isActive("/") ? "bg-primary text-white" : "text-neutral-600 hover:bg-neutral-100 hover:text-neutral-800"} block pl-3 pr-4 py-2 text-base font-medium`}
+                className={`${
+                  isActive("/")
+                    ? "bg-gray-800 text-white"
+                    : "text-gray-400 hover:bg-gray-800 hover:text-white"
+                } block pl-3 pr-4 py-2 text-base font-medium transition-colors duration-300`}
                 onClick={closeMenu}
               >
                 Home
@@ -89,7 +121,11 @@ export default function Header() {
             </Link>
             <Link href="/cars">
               <span
-                className={`${isActive("/cars") ? "bg-primary text-white" : "text-neutral-600 hover:bg-neutral-100 hover:text-neutral-800"} block pl-3 pr-4 py-2 text-base font-medium`}
+                className={`${
+                  isActive("/cars")
+                    ? "bg-gray-800 text-white"
+                    : "text-gray-400 hover:bg-gray-800 hover:text-white"
+                } block pl-3 pr-4 py-2 text-base font-medium transition-colors duration-300`}
                 onClick={closeMenu}
               >
                 Cars
@@ -97,18 +133,14 @@ export default function Header() {
             </Link>
             <Link href="/locations">
               <span
-                className={`${isActive("/locations") ? "bg-primary text-white" : "text-neutral-600 hover:bg-neutral-100 hover:text-neutral-800"} block pl-3 pr-4 py-2 text-base font-medium`}
+                className={`${
+                  isActive("/locations")
+                    ? "bg-gray-800 text-white"
+                    : "text-gray-400 hover:bg-gray-800 hover:text-white"
+                } block pl-3 pr-4 py-2 text-base font-medium transition-colors duration-300`}
                 onClick={closeMenu}
               >
                 Locations
-              </span>
-            </Link>
-            <Link href="/deals">
-              <span
-                className={`${isActive("/deals") ? "bg-primary text-white" : "text-neutral-600 hover:bg-neutral-100 hover:text-neutral-800"} block pl-3 pr-4 py-2 text-base font-medium`}
-                onClick={closeMenu}
-              >
-                Deals
               </span>
             </Link>
           </div>

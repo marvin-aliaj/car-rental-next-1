@@ -1,6 +1,8 @@
 "use client";
-import { Skeleton } from '@/components/ui/skeleton';
+import {Skeleton} from '@/components/ui/skeleton';
 import {useState} from "react";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faStar, faStarHalfAlt, faUserCircle} from "@fortawesome/free-solid-svg-icons";
 
 export default function Testimonials() {
   const [reviews] = useState<Review[]>([]);
@@ -47,11 +49,11 @@ export default function Testimonials() {
     const stars = [];
     for (let i = 1; i <= 5; i++) {
       if (i <= rating) {
-        stars.push(<i key={i} className="fas fa-star"></i>);
+        stars.push(<FontAwesomeIcon key={i} icon={faStar}/>);
       } else if (i - 0.5 <= rating) {
-        stars.push(<i key={i} className="fas fa-star-half-alt"></i>);
+        stars.push(<FontAwesomeIcon key={i} icon={faStarHalfAlt}/>);
       } else {
-        stars.push(<i key={i} className="far fa-star"></i>);
+        stars.push(<FontAwesomeIcon key={i} icon={faStar}/>);
       }
     }
     return stars;
@@ -66,7 +68,7 @@ export default function Testimonials() {
             Don&#39;t take our word for it – hear what our satisfied customers have to say about their rental experience.
           </p>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {isLoading ? (
             Array(3).fill(0).map((_, index) => (
@@ -90,9 +92,12 @@ export default function Testimonials() {
                 </div>
                 <p className="italic text-neutral-600 mb-4">{testimonial.comment}</p>
                 <div className="flex items-center">
-                  <span className="inline-block h-10 w-10 rounded-full overflow-hidden bg-neutral-200">
-                    <i className="fas fa-user-circle text-neutral-500 text-2xl flex justify-center items-center h-full"></i>
-                  </span>
+                  <button className="p-2 rounded-full hover:bg-neutral-100 flex items-center justify-center">
+                    <FontAwesomeIcon
+                        icon={faUserCircle}
+                        className="text-neutral-500 text-3xl"
+                    />
+                  </button>
                   <div className="ml-3">
                     <h4 className="text-sm font-medium text-neutral-800">{testimonial.user?.fullName}</h4>
                     <p className="text-sm text-neutral-500">{testimonial.user?.location || "Happy Customer"}</p>

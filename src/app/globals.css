@@ -114,9 +114,32 @@
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border;
   }
+
   body {
-    @apply bg-background text-foreground;
+    @apply font-sans antialiased bg-neutral-100 text-neutral-800;
+  }
+}
+
+@layer utilities {
+  .btn-primary {
+    @apply bg-[rgb(21,24,27)] hover:bg-gray-800 cursor-pointer text-white font-medium rounded-md px-6 py-3 text-center shadow-md transition duration-300 ease-in-out;
+  }
+
+  .btn-secondary {
+    @apply bg-secondary hover:bg-secondary/90 text-white font-medium rounded-md px-6 py-3 text-center shadow-md transition duration-300 ease-in-out;
+  }
+
+  .btn-outline {
+    @apply bg-white hover:bg-neutral-50 text-primary font-medium border border-primary rounded-md px-6 py-3 text-center transition duration-300 ease-in-out;
+  }
+
+  .section-title {
+    @apply text-3xl font-bold text-neutral-800;
+  }
+
+  .section-description {
+    @apply mt-4 text-neutral-600 max-w-2xl mx-auto;
   }
 }

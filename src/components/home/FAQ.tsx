@@ -1,51 +1,58 @@
 "use client";
-import { 
+import {
   Accordion,
   AccordionContent,
   AccordionItem,
-  AccordionTrigger 
+  AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export default function FAQ() {
   const faqItems = [
     {
       question: "What do I need to rent a car?",
-      answer: "To rent a car, you'll need a valid driver's license, a credit card in your name, and proof of insurance. International renters may need additional documentation. The minimum age requirement is typically 21, but may vary depending on the vehicle type."
+      answer:
+        "To rent a car, you'll need a valid driver's license, a credit card in your name, and proof of insurance. International renters may need additional documentation. The minimum age requirement is typically 18, but may vary depending on the vehicle type.",
     },
     {
       question: "Can I modify or cancel my reservation?",
-      answer: "Yes, you can modify or cancel your reservation through your account on our website or mobile app. Most reservations can be canceled free of charge if done at least 24 hours before the scheduled pickup time. Changes to your reservation may affect pricing."
+      answer:
+        "Yes, you can modify or cancel your reservation through contacting us.",
     },
     {
       question: "Is insurance included in the rental price?",
-      answer: "Basic insurance is included in the rental price, but we offer additional coverage options for complete peace of mind. You can add these coverages during the booking process or at the rental counter."
+      answer:
+        "Basic insurance is included in the rental price, but we offer additional coverage options for complete peace of mind. You can add these coverages during the booking process or at the rental counter.",
     },
     {
       question: "What is your fuel policy?",
-      answer: "Our standard policy is \"full-to-full,\" which means you'll receive the car with a full tank and are expected to return it with a full tank. If you return the car with less fuel than when you received it, you'll be charged for refueling at a premium rate."
+      answer:
+        "Our standard policy is \"full-to-full,\" which means you'll receive the car with a full tank and are expected to return it with a full tank. If you return the car with less fuel than when you received it, you'll be charged for refueling at a premium rate.",
     },
-    {
-      question: "Do you offer one-way rentals?",
-      answer: "Yes, we offer one-way rentals between many of our locations. Additional fees may apply depending on the distance between pickup and drop-off locations. One-way options can be selected during the booking process."
-    }
   ];
 
   return (
-    <section className="py-16 bg-white">
+    <section id="faq" className="py-16 bg-white">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-neutral-800">Frequently Asked Questions</h2>
+          <h2 className="text-3xl font-bold text-neutral-800">
+            Frequently Asked Questions
+          </h2>
           <p className="mt-4 text-neutral-600 max-w-2xl mx-auto">
-            Find answers to common questions about our rental process, policies, and services.
+            Find answers to common questions about our rental process, policies,
+            and services.
           </p>
         </div>
-        
+
         <div className="space-y-4">
           <Accordion type="single" collapsible className="w-full">
             {faqItems.map((item, index) => (
-              <AccordionItem key={index} value={`item-${index}`} className="border border-neutral-200 rounded-md overflow-hidden">
+              <AccordionItem
+                key={index}
+                value={`item-${index}`}
+                className="border border-neutral-200 rounded-md overflow-hidden"
+              >
                 <AccordionTrigger className="flex justify-between items-center w-full bg-neutral-50 px-4 py-3 text-left focus:outline-none text-lg font-medium text-neutral-800">
                   {item.question}
                 </AccordionTrigger>
@@ -56,11 +63,13 @@ export default function FAQ() {
             ))}
           </Accordion>
         </div>
-        
+
         <div className="mt-12 text-center">
-          <p className="text-neutral-600 mb-4">Still have questions? Contact our customer support team.</p>
-          <Link href="/contact">
-            <Button className="inline-block bg-primary hover:bg-primary/90 text-white font-medium rounded-md px-6 py-3 text-center shadow-md transition duration-300 ease-in-out">
+          <p className="text-neutral-600 mb-4">
+            Still have questions? Contact our customer support team.
+          </p>
+          <Link href="/contact-us">
+            <Button className="bg-primary hover:cursor-pointer">
               Contact Support
             </Button>
           </Link>
