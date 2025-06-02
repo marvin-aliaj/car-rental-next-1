@@ -1,15 +1,18 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { z } from "zod";
 import { toast } from "sonner";
 import BookingCalendar from "@/components/booking/BookingCalendar";
 import CarDetails from "@/components/booking/CarDetails";
 import BookingConfirmation from "@/components/booking/BookingConfirmation";
-import { differenceInDays } from "date-fns";
+import { differenceInDays, format } from "date-fns";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useStore } from "@/store/useStore";
+import { Skeleton } from "@/components/ui/skeleton";
+import { createBooking } from "@/lib/actions/rental.actions";
+import { locations } from "@/lib/utils";
 import {
   Select,
   SelectContent,
@@ -17,10 +20,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useStore } from "@/store/useStore";
-import { locations } from "@/lib/utils";
-import { Skeleton } from "@/components/ui/skeleton";
-import { FaInfoCircle } from "react-icons/fa";
 
 export default function Booking() {
   const cars = useStore((state) => state.cars);
@@ -28,7 +27,6 @@ export default function Booking() {
   const [searchParams, setSearchParams] = useState(null);
   const params = useParams();
   const carId = params.id;
-
   const router = useRouter();
 
   const initialLocationId = searchParams?.get("locationId");
@@ -70,51 +68,6 @@ export default function Booking() {
       console.log("Car not found");
     }
   }, [carId, cars]);
-  //
-  // export const insertBookingSchema = createInsertSchema(bookings).pick({
-  //   userId: true,
-  //   carId: true,
-  //   pickupLocationId: true,
-  //   returnLocationId: true,
-  //   pickupDate: true,
-  //   returnDate: true,
-  //   totalPrice: true,
-  //   status: true,
-  // });
-
-  const insertBookingSchema = z.object({
-    userId: z.number(),
-    carId: z.number(),
-    pickupLocationId: z
-      .string()
-      .min(1, { message: "Please select a pickup location" }),
-    returnLocationId: z
-      .string()
-      .min(1, { message: "Please select a return location" }),
-    pickupDate: z.string().min(1, { message: "Please select a pickup date" }),
-    returnDate: z.string().min(1, { message: "Please select a return date" }),
-    totalPrice: z.number(),
-    status: z.string(),
-  });
-
-  // const bookingMutation = useMutation({
-  //   mutationFn: async (bookingData: z.infer<typeof insertBookingSchema>) => {
-  //     const response = await apiRequest("POST", "/api/bookings", bookingData);
-  //     return response.json();
-  //   },
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries({ queryKey: ["/api/bookings"] });
-  //     // toast({
-  //     //   title: "Booking confirmed!",
-  //     //   description: "Your car has been successfully booked.",
-  //     // });
-  //     toast.success("Booking confirmed!");
-  //     router.push("/booking-success");
-  //   },
-  //   onError: (error) => {
-  //     toast.error("Booking failed");
-  //   },
-  // });
 
   const handleDateRangeChange = (range: { from: Date; to: Date }) => {
     setDateRange(range);
@@ -142,23 +95,31 @@ export default function Booking() {
 
     const days = differenceInDays(dateRange.to, dateRange.from) || 1;
     const pricePerDay = car?.pricePerDay || 0;
-    const totalPrice = days * Number(pricePerDay) * 1.0825; // Adding tax
+    const price = days * pricePerDay;
+    const taxes = price * 0.0825;
+    const totalPrice = price + taxes;
 
     // Since we're not using authentication, we'll use a default user ID (1)
     const bookingData = {
-      userId: 1, // Default guest user ID
+      customerName: customerInfo.fullName,
+      customerEmail: customerInfo.email,
+      customerPhone: customerInfo.phone,
+      location: selectedLocationId,
       carId: carId,
-      pickupLocationId: selectedLocationId,
-      returnLocationId: selectedLocationId, // Same location for now
-      pickupDate: dateRange.from,
-      returnDate: dateRange.to,
-      totalPrice: totalPrice.toString(), // Convert to string as required by the schema
-      status: "pending",
+      startDate: format(dateRange.from, "yyyy-MM-dd"),
+      endDate: format(dateRange.to, "yyyy-MM-dd"),
+      calculatedPrice: totalPrice * 100, // Convert to string as required by the schema
+      status: "PENDING",
     };
 
-    console.log(bookingData);
-
-    // bookingMutation.mutate(bookingData);
+    createBooking(bookingData)
+      .then(() => {
+        toast.success("Booking created successfully");
+        router.push(`/cars`);
+      })
+      .catch((e) => {
+        toast.error(e.message);
+      });
   };
 
   if (cars.length === 0) {
@@ -223,7 +184,6 @@ export default function Booking() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             {/* Left Column */}
             <div className="lg:col-span-8 space-y-8">
-              {/* Select Location */}
               <Card>
                 <CardContent className="p-6">
                   <h2 className="text-xl font-medium text-neutral-800 mb-4">
@@ -253,17 +213,14 @@ export default function Booking() {
                   )}
                 </CardContent>
               </Card>
-
               {/* Select Dates */}
               <BookingCalendar
                 onRangeChange={handleDateRangeChange}
                 startDate={initialStartDate}
                 endDate={initialEndDate}
               />
-
               {/* Car Details */}
               <CarDetails car={car} />
-
               {/* Customer Information */}
               <Card>
                 <CardContent className="p-6">
@@ -333,23 +290,7 @@ export default function Booking() {
                   dateRange={dateRange}
                   onSubmit={handleSubmitBooking}
                 />
-              ) : (
-                <Card>
-                  <CardContent className="p-6">
-                    <h3 className="text-lg font-medium text-neutral-800 mb-4">
-                      Booking Summary
-                    </h3>
-                    <p className="text-neutral-600 mb-4">
-                      Please select a pickup location to continue.
-                    </p>
-                    <p className="text-neutral-600">
-                      <FaInfoCircle className="mr-2 text-primary" />
-                      Complete the required information on the left to proceed
-                      with your booking.
-                    </p>
-                  </CardContent>
-                </Card>
-              )}
+              ) : null}
             </div>
           </div>
         </div>

@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
 import { Card, CardContent } from "@/components/ui/card";
+import { DateRange } from "react-day-picker";
 
 interface BookingCalendarProps {
   onRangeChange: (range: { from: Date; to: Date }) => void;
@@ -20,22 +21,21 @@ export default function BookingCalendar({
   const tomorrow = new Date(today);
   tomorrow.setDate(tomorrow.getDate() + 1);
 
-  useEffect(() => {
-    console.log(startDate);
-  }, []);
-
-  const [date, setDate] = useState<{
-    from: Date;
-    to: Date;
-  }>({
+  const [date, setDate] = useState<DateRange>({
     from: startDate ? startDate : today,
     to: endDate ? endDate : tomorrow,
   });
 
-  const handleSelect = (range: { from?: Date; to?: Date }) => {
-    if (range.from && range.to) {
+  const handleSelect = (range: DateRange) => {
+    if (range === undefined) {
+      setDate({ from: undefined, to: undefined });
+      return;
+    }
+    if (range?.from && range?.to) {
       setDate({ from: range.from, to: range.to });
       onRangeChange({ from: range.from, to: range.to });
+    } else {
+      setDate(range);
     }
   };
 
@@ -55,14 +55,21 @@ export default function BookingCalendar({
             )}
           </div>
         </div>
-        <Calendar
-          mode="range"
-          selected={date}
-          onSelect={handleSelect}
-          numberOfMonths={2}
-          disabled={{ before: today }}
-          className="rounded-md border"
-        />
+        <div className="[&_.rdp-months]:gap-12">
+          {" "}
+          <Calendar
+            mode="range"
+            selected={date}
+            onSelect={handleSelect}
+            numberOfMonths={2}
+            disabled={{ before: today }}
+            className="rounded-md border"
+            classNames={{
+              months: "flex justify-center",
+              month: "w-[280px]",
+            }}
+          />
+        </div>
       </CardContent>
     </Card>
   );

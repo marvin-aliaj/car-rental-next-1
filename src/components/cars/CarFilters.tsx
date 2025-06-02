@@ -1,10 +1,10 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
-import { locations } from "@/lib/utils";
+import { FaFilter } from "react-icons/fa";
 
 interface CarFiltersProps {
   onFilterChange: (filters: Record<string, any>) => void;
@@ -68,31 +68,9 @@ export default function CarFilters({
 
   return (
     <div className="sticky top-24">
-      <h3 className="text-lg font-bold text-neutral-800 mb-4">Filters</h3>
-
-      <div className="mb-6">
-        <h4 className="text-sm font-semibold text-neutral-700 mb-2">
-          Location
-        </h4>
-        <div className="space-y-2">
-          {locations.map((location) => (
-            <div key={location.id} className="flex items-center">
-              <Checkbox
-                id={`${location.id}`}
-                checked={locationFilter === location.id}
-                onCheckedChange={() => handleLocationChange(location.id)}
-                className="rounded text-primary focus:ring-primary h-4 w-4"
-              />
-              <Label
-                htmlFor={`location-${location}`}
-                className="ml-2 text-sm text-neutral-600"
-              >
-                {location.name}
-              </Label>
-            </div>
-          ))}
-        </div>
-      </div>
+      <h3 className="flex items-center gap-4 text-lg font-bold text-neutral-800 mb-4">
+        <FaFilter /> Filters
+      </h3>
 
       <div className="mb-6">
         <h4 className="text-sm font-semibold text-neutral-700 mb-2">
@@ -191,30 +169,6 @@ export default function CarFilters({
           ))}
         </div>
       </div>
-
-      {/*<div className="mb-6">*/}
-      {/*  <h4 className="text-sm font-semibold text-neutral-700 mb-2">Features</h4>*/}
-      {/*  <div className="space-y-2">*/}
-      {/*    {[*/}
-      {/*      { id: 'gps', label: 'GPS Navigation' },*/}
-      {/*      { id: 'bluetooth', label: 'Bluetooth' },*/}
-      {/*      { id: 'camera', label: 'Backup Camera' },*/}
-      {/*      { id: 'sunroof', label: 'Sunroof' }*/}
-      {/*    ].map((feature) => (*/}
-      {/*        <div key={feature.id} className="flex items-center">*/}
-      {/*          <Checkbox*/}
-      {/*              id={`feature-${feature.id}`}*/}
-      {/*              checked={features.includes(feature.id)}*/}
-      {/*              onCheckedChange={() => handleFeatureChange(feature.id)}*/}
-      {/*              className="rounded text-primary focus:ring-primary h-4 w-4"*/}
-      {/*          />*/}
-      {/*          <Label htmlFor={`feature-${feature.id}`} className="ml-2 text-sm text-neutral-600">*/}
-      {/*            {feature.label}*/}
-      {/*          </Label>*/}
-      {/*        </div>*/}
-      {/*    ))}*/}
-      {/*  </div>*/}
-      {/*</div>*/}
 
       <Button
         onClick={applyFilters}

@@ -31,10 +31,16 @@ declare type Car = {
   available: boolean;
   features: string;
   imageUrl: string;
-  locationId: number;
   description: string;
   category: string;
   location: string;
+};
+
+declare type User = {
+  id: number;
+  email: string;
+  firstName: string;
+  lastName: string;
 };
 
 declare type Review = {

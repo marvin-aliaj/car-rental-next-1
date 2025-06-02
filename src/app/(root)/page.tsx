@@ -8,7 +8,7 @@ import FAQ from "@/components/home/FAQ";
 import Newsletter from "@/components/home/Newsletter";
 import OurLocations from "@/components/home/OurLocations";
 import { useStore } from "@/store/useStore";
-import { getCars } from "@/lib/actions";
+import { getCars } from "@/lib/actions/rental.actions";
 import { toast } from "sonner";
 import { useEffect } from "react";
 

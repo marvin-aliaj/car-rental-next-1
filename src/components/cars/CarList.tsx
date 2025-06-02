@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -22,6 +22,8 @@ import {
 } from "react-icons/fa";
 import { GiGearStickPattern } from "react-icons/gi";
 import CarCard from "@/components/cars/CarCard";
+import { getCars } from "@/lib/actions/rental.actions";
+import { toast } from "sonner";
 
 interface CarListProps {
   locationObj?: { id: string; name: string };
@@ -35,98 +37,138 @@ export default function CarList({
   endDate,
   filters = {},
 }: CarListProps) {
+  const globalCars = useStore((state) => state.cars);
   const [sortOption, setSortOption] = useState("price-asc");
   const [currentPage, setCurrentPage] = useState(1);
-  const cars = useStore((state) => state.cars);
+  const [cars, setCars] = useState([]);
+  const [allCars, setAllCars] = useState([]);
+  const [currentCars, setCurrentCars] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const carsPerPage = 3; // Number of cars to display per page
-
-  // Construct the query URL with filters
-  let queryUrl = "/api/cars";
-  const queryParams = new URLSearchParams();
-
-  if (filters.type) queryParams.append("type", filters.type);
-  if (filters.minPrice)
-    queryParams.append("minPrice", filters.minPrice.toString());
-  if (filters.maxPrice)
-    queryParams.append("maxPrice", filters.maxPrice.toString());
-  if (filters.seats) queryParams.append("seats", filters.seats.toString());
-
-  const queryString = queryParams.toString();
-  if (queryString) queryUrl += `?${queryString}`;
-
-  // const { data: cars, isLoading } = useQuery<Car[]>({
-  //   queryKey: [queryUrl],
-  // });
-
-  // Sort the cars based on the selected sort option
-  const sortedCars = [...(cars || [])].sort((a, b) => {
-    switch (sortOption) {
-      case "price-asc":
-        return Number(a.pricePerDay) - Number(b.pricePerDay);
-      case "price-desc":
-        return Number(b.pricePerDay) - Number(a.pricePerDay);
-      default:
-        return 0;
-    }
-  });
-
+  const carsPerPage = 3;
   // Calculate pagination values
-  const totalCars = sortedCars.length;
-  const totalPages = Math.ceil(totalCars / carsPerPage);
+  const totalCars = allCars.length;
+  let totalPages = Math.ceil(totalCars / carsPerPage);
+
+  useEffect(() => {
+    setIsLoading(true);
+    if (startDate && endDate) {
+      getCars({ startDate: startDate, endDate: endDate })
+        .then((data) => {
+          setCars(data);
+        })
+        .catch((e) => {
+          toast.error(e.message);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    } else {
+      setCars(globalCars);
+    }
+  }, []);
+
+  useEffect(() => {
+    setCurrentPage(1);
+    if (filters) {
+      let filteredCars = cars;
+      if (filters.location) {
+        filteredCars = filteredCars.filter(
+          (car: Car) => car.location === filters.location,
+        );
+      }
+
+      if (filters.minPrice !== undefined) {
+        filteredCars = filteredCars.filter(
+          (car: Car) => Number(car.pricePerDay) >= filters.minPrice!,
+        );
+      }
+
+      if (filters.maxPrice !== undefined) {
+        filteredCars = filteredCars.filter(
+          (car: Car) => Number(car.pricePerDay) <= filters.maxPrice!,
+        );
+      }
+
+      if (filters.seats) {
+        switch (filters.seats) {
+          case "2":
+            filteredCars = filteredCars.filter((car: Car) => car.seats <= 4);
+            break;
+          case "5":
+            filteredCars = filteredCars.filter(
+              (car: Car) => Number(car.seats) > 4 && Number(car.seats) <= 6,
+            );
+            break;
+          case "7":
+            filteredCars = filteredCars.filter(
+              (car: Car) => Number(car.seats) >= 7,
+            );
+            break;
+        }
+      }
+
+      if (filters.transmission) {
+        filteredCars = filteredCars.filter(
+          (car: Car) => car.transmission === filters.transmission,
+        );
+      }
+
+      if (filters.fuelType) {
+        filteredCars = filteredCars.filter(
+          (car: Car) => car.fuelType === filters.fuelType,
+        );
+      }
+      setAllCars(filteredCars);
+      const indexOfLastCar = currentPage * carsPerPage;
+      const indexOfFirstCar = indexOfLastCar - carsPerPage;
+      handleSortChange(sortOption, filteredCars);
+    }
+  }, [filters]);
+
+  useEffect(() => {
+    setAllCars(cars);
+    handleSortChange(sortOption, cars);
+  }, [cars]);
+
+  useEffect(() => {
+    handleSortChange(sortOption, allCars);
+    setCurrentPage(1);
+  }, [sortOption]);
+
+  useEffect(() => {
+    const indexOfLastCar = currentPage * carsPerPage;
+    const indexOfFirstCar = indexOfLastCar - carsPerPage;
+    setCurrentCars(allCars.slice(indexOfFirstCar, indexOfLastCar));
+  }, [currentPage]);
+
+  useEffect(() => {
+    totalPages = Math.ceil(allCars.length / carsPerPage);
+    const indexOfLastCar = currentPage * carsPerPage;
+    const indexOfFirstCar = indexOfLastCar - carsPerPage;
+    setCurrentCars(allCars.slice(indexOfFirstCar, indexOfLastCar));
+  }, [allCars]);
+
+  const handleSortChange = (sortOption, data) => {
+    setIsLoading(true);
+    if (data.length) {
+      const sortedCars = [...(data || [])].sort((a, b) => {
+        switch (sortOption) {
+          case "price-asc":
+            return Number(a.pricePerDay) - Number(b.pricePerDay);
+          case "price-desc":
+            return Number(b.pricePerDay) - Number(a.pricePerDay);
+          default:
+            return 0;
+        }
+      });
+      setAllCars(sortedCars);
+    }
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 700);
+  };
 
   // Get current cars for this page
-  const indexOfLastCar = currentPage * carsPerPage;
-  const indexOfFirstCar = indexOfLastCar - carsPerPage;
-  let currentCars = sortedCars.slice(indexOfFirstCar, indexOfLastCar);
-
-  if (filters) {
-    if (filters.location) {
-      currentCars = sortedCars.filter(
-        (car) => car.location === filters.location,
-      );
-    }
-
-    if (filters.minPrice !== undefined) {
-      currentCars = currentCars.filter(
-        (car) => Number(car.pricePerDay) >= filters.minPrice!,
-      );
-    }
-
-    if (filters.maxPrice !== undefined) {
-      currentCars = currentCars.filter(
-        (car) => Number(car.pricePerDay) <= filters.maxPrice!,
-      );
-    }
-
-    if (filters.seats) {
-      switch (filters.seats) {
-        case "2":
-          currentCars = currentCars.filter((car) => car.seats <= 4);
-          break;
-        case "5":
-          currentCars = currentCars.filter(
-            (car) => Number(car.seats) > 4 && Number(car.seats) <= 6,
-          );
-          break;
-        case "7":
-          currentCars = currentCars.filter((car) => Number(car.seats) >= 7);
-          break;
-      }
-    }
-
-    if (filters.transmission) {
-      currentCars = currentCars.filter(
-        (car) => car.transmission === filters.transmission,
-      );
-    }
-
-    if (filters.fuelType) {
-      currentCars = currentCars.filter(
-        (car) => car.fuelType === filters.fuelType,
-      );
-    }
-  }
 
   // Change page
   const goToPage = (pageNumber: number) => {
@@ -204,7 +246,7 @@ export default function CarList({
                 </div>
               </div>
             ))
-        ) : sortedCars.length === 0 || currentCars.length === 0 ? (
+        ) : allCars.length === 0 || currentCars.length === 0 ? (
           <div className="bg-white border border-neutral-200 rounded-lg p-8 text-center">
             <h3 className="text-xl font-semibold text-neutral-800 mb-2">
               No cars available
@@ -278,7 +320,11 @@ export default function CarList({
                         Free Cancellation
                       </p>
                       <Link
-                        href={`/booking/${car.id}?start=${startDate}&end=${endDate}`}
+                        href={
+                          startDate !== null
+                            ? `/booking/${car.id}?start=${startDate}&end=${endDate}`
+                            : `/booking/${car.id}`
+                        }
                       >
                         <Button className="mt-4 bg-primary hover:bg-primary/90 text-white font-medium rounded-md px-6 py-2 text-center shadow-sm transition duration-300 ease-in-out">
                           Book Now
@@ -310,7 +356,7 @@ export default function CarList({
         )}
       </div>
 
-      {!isLoading && sortedCars.length > 0 && (
+      {!isLoading && allCars.length > 0 && (
         <div className="mt-8 flex justify-center">
           <nav
             className="inline-flex rounded-md shadow-sm -space-x-px"

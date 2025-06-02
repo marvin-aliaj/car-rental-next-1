@@ -1,4 +1,5 @@
 import axios from "axios";
+import { cookies } from "next/headers";
 
 const axiosInstance = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_SITE_URL}`, // Base URL of your API
@@ -8,19 +9,29 @@ const axiosInstance = axios.create({
   },
 });
 
+const handleToken = async () => {
+  const token = cookies().get("token");
+  if (token) {
+    return token.value;
+  }
+  return null;
+};
+
 // Add a request interceptor
 axiosInstance.interceptors.request.use(
   async (config) => {
-    const token = "pelikanikaravastas";
+    const apiKey = process.env.API_TOKEN;
+    if (apiKey) {
+      config.headers["x-api-key"] = `${apiKey}`;
+    }
+    const token = await handleToken();
 
     if (token) {
       config.headers.Authorization = token;
     }
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  },
+  (error) => Promise.reject(error),
 );
 
 // Add a response interceptor

@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import CarFilters from "@/components/cars/CarFilters";
 import CarList from "@/components/cars/CarList";
-import { findLocationByName } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const CarsPage = () => {
@@ -109,8 +108,8 @@ const CarsPage = () => {
 
             {/* Car Listings */}
             <CarList
-              startDate={startDate || new Date()}
-              endDate={endDate || new Date()}
+              startDate={startDate || null}
+              endDate={endDate || null}
               filters={filters}
             />
           </div>

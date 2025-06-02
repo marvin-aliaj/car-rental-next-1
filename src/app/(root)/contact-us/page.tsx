@@ -1,5 +1,5 @@
 "use client";
-import { MapPin, Phone, Mail, Clock } from "lucide-react";
+import { Clock, Mail, MapPin, Phone } from "lucide-react";
 import * as React from "react";
 import Map from "@/components/map";
 

@@ -1,6 +1,5 @@
 "use client";
 import Link from "next/link";
-// import { Car } from '@shared/schema';
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useState } from "react";
@@ -52,7 +51,7 @@ export default function FeaturedCars() {
                     </div>
                   </div>
                 ))
-            : cars.slice(0, 3)?.map((car) => (
+            : cars?.slice(0, 3)?.map((car) => (
                 <div key={car.id} className="md:flex justify-center">
                   <CarCard car={car} enableHover={true} />
                 </div>
