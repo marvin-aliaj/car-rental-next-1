@@ -10,7 +10,7 @@ const axiosInstance = axios.create({
 });
 
 const handleToken = async () => {
-  const token = cookies().get("token");
+  const token = (await cookies()).get("token");
   if (token) {
     return token.value;
   }

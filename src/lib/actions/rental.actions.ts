@@ -29,7 +29,7 @@ export const createBooking = async (body) => {
 export const signIn = async (body) => {
   try {
     const response = await post("/authentication/sign-in", body);
-    cookies().set("token", response, {
+    (await cookies()).set("token", response, {
       secure: true,
       path: "/",
       maxAge: 30 * 24 * 60 * 60,
