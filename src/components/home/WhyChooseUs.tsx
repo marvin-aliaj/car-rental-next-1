@@ -54,9 +54,9 @@ export default function WhyChooseUs() {
               key={index}
               className="bg-white p-6 rounded-lg shadow-md text-center"
             >
-              <div className="w-16 h-16 mx-auto bg-blue-100 rounded-full flex items-center justify-center mb-4">
+              <div className="w-16 h-16 mx-auto bg-gray-700 rounded-full flex items-center justify-center mb-4">
                 <FontAwesomeIcon
-                  className={`text-blue-500 text-2xl`}
+                  className={`text-white text-2xl`}
                   icon={feature.icon}
                 />
               </div>
