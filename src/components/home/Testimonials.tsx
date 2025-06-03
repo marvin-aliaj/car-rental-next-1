@@ -18,7 +18,7 @@ export default function Testimonials() {
       id: 1,
       rating: 5,
       comment:
-        "The service was exceptional! The car was clean, well-maintained, and the pickup process was smooth. I will definitely be renting from AutoRental again.",
+        "The service was exceptional! The car was clean, well-maintained, and the pickup process was smooth. I will definitely be renting from Gold Car Rental again.",
       user: {
         id: 1,
         fullName: "Alban Hoxha",

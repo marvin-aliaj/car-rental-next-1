@@ -32,7 +32,8 @@ declare type Car = {
   features: string;
   imageUrl: string;
   description: string;
-  category: string;
+  reviewStars: number;
+  reviewerCount: number;
   location: string;
 };
 

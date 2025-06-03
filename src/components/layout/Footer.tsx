@@ -8,7 +8,9 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           <div>
-            <h3 className="font-bold text-white text-lg mb-4">AutoRental</h3>
+            <h3 className="font-bold text-white text-lg mb-4">
+              Gold Car Rental
+            </h3>
             <p className="text-neutral-400 mb-4">
               Providing quality car rentals since 2010. Our mission is to offer
               convenient, reliable, and affordable transportation options for
@@ -104,7 +106,8 @@ export default function Footer() {
 
         <div className="mt-12 pt-8 border-t border-neutral-700 flex flex-col md:flex-row justify-between items-center">
           <p className="text-neutral-400 text-sm">
-            &copy; {new Date().getFullYear()} AutoRental. All rights reserved.
+            &copy; {new Date().getFullYear()} Gold Car Rental. All rights
+            reserved.
           </p>
           <div className="mt-4 md:mt-0 flex flex-wrap gap-4 text-sm text-neutral-400">
             <Link href="#faq">

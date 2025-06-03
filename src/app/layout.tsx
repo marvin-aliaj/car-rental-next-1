@@ -14,9 +14,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AutoRental - Find and Book Your Perfect Car",
+  title: "Gold Car Rent - Find and Book Your Perfect Car",
   description:
-    "Find and book your perfect rental car with AutoRental. Choose from our wide selection of vehicles at competitive prices with exceptional service.",
+    "Find and book your perfect rental car with Gold Car Rent. Choose from our wide selection of vehicles at competitive prices with exceptional service.",
+  icons: {
+    icon: "/car-rental-icon.png",
+  },
 };
 
 export default function RootLayout({

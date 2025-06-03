@@ -31,12 +31,14 @@ export default function Header() {
             {/* Logo */}
             <div className="flex-shrink-0">
               <Link href="/">
-                <div className="flex items-center space-x-2 cursor-pointer group">
-                  <div className="w-8 h-8 bg-gradient-to-br from-gray-600 to-gray-800 rounded-lg flex items-center justify-center text-white font-bold group-hover:from-gray-500 group-hover:to-gray-700 transition-all duration-300 shadow-md group-hover:shadow-lg group-active:scale-95">
-                    C
-                  </div>
-                  <span className="text-xl font-bold text-gray-200 hover:text-white transition-colors duration-300">
-                    CarRental
+                <div className="flex items-center cursor-pointer hover:scale-95 transition-all duration-300">
+                  <img
+                    src="/car-rental-icon.png"
+                    alt="Car"
+                    className="h-15 object-contain"
+                  />
+                  <span className="text-xl font-bold text-gold">
+                    Gold Car Rent
                   </span>
                 </div>
               </Link>

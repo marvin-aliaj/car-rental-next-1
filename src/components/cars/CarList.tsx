@@ -272,7 +272,6 @@ export default function CarList({
                       <h3 className="text-xl font-bold text-neutral-800">
                         {car.brand} {car.model}
                       </h3>
-                      <p className="text-neutral-600 mt-1">{car.category}</p>
 
                       <div className="mt-3 flex flex-wrap items-center text-sm text-neutral-600">
                         <div className="flex items-center mr-4 mb-2">
@@ -303,7 +302,7 @@ export default function CarList({
                             <FontAwesomeIcon icon={faStarHalfAlt} />
                           </div>
                           <span className="ml-2 text-sm text-neutral-600">
-                            4.5 (52 reviews)
+                            {car.reviewStars} ({car.reviewerCount} reviewers)
                           </span>
                         </div>
                       </div>

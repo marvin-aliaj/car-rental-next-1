@@ -74,13 +74,19 @@ export default function Booking() {
             </div>
           ))
       ) : (
-        <section className="auth-form">
+        <section className="auth-form bg-gray-100">
           <header className="flex flex-col gap-5 md:gap-8">
             <div className="flex items-center space-x-2 cursor-pointer group">
-              <div className="w-8 h-8 bg-gradient-to-br from-gray-600 to-gray-800 rounded-lg flex items-center justify-center text-white font-bold group-hover:from-gray-500 group-hover:to-gray-700 transition-all duration-300 shadow-md group-hover:shadow-lg group-active:scale-95">
-                C
+              <div className="flex items-center cursor-pointer">
+                <img
+                  src="/car-rental-icon.png"
+                  alt="Car"
+                  className="h-15 object-contain"
+                />
+                <span className="text-2xl font-bold text-gold">
+                  Gold Car Rent
+                </span>
               </div>
-              <span className="text-xl font-bold text-gray-900">CarRental</span>
             </div>
 
             <div className="flex flex-col gap-1 md:gap-3">
