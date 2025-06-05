@@ -11,52 +11,54 @@ import Link from "next/link";
 export default function FAQ() {
   const faqItems = [
     {
-      question: "What do I need to rent a car?",
+      question: "What documents do I need to rent a car?",
       answer:
-        "To rent a car, you'll need a valid driver's license, a credit card in your name, and proof of insurance. International renters may need additional documentation. The minimum age requirement is typically 18, but may vary depending on the vehicle type.",
+        "You’ll need a valid driver’s license, a credit card in your name, and proof of insurance. If you’re renting from abroad, make sure to bring any required international permits.",
     },
     {
-      question: "Can I modify or cancel my reservation?",
+      question: "Can I change or cancel my booking?",
       answer:
-        "Yes, you can modify or cancel your reservation through contacting us.",
+        "Absolutely. You can change or cancel your booking by contacting our support team. We recommend reaching out as early as possible for the best flexibility.",
     },
     {
-      question: "Is insurance included in the rental price?",
+      question: "Does the price include insurance?",
       answer:
-        "Basic insurance is included in the rental price, but we offer additional coverage options for complete peace of mind. You can add these coverages during the booking process or at the rental counter.",
+        "Yes, basic coverage is included. For extra protection, we offer optional insurance packages during checkout or at pickup.",
     },
     {
-      question: "What is your fuel policy?",
+      question: "How does your fuel policy work?",
       answer:
-        "Our standard policy is \"full-to-full,\" which means you'll receive the car with a full tank and are expected to return it with a full tank. If you return the car with less fuel than when you received it, you'll be charged for refueling at a premium rate.",
+        "We operate on a full-to-full policy. Just return the car with a full tank like you received it to avoid extra charges.",
     },
   ];
 
   return (
-    <section id="faq" className="py-16 bg-white">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-neutral-800">
+    <section id="faq" className="py-24 bg-neutral-50">
+      <div className="max-w-6xl mx-auto px-6 lg:px-8">
+        {/* Heading */}
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold text-neutral-900">
             Frequently Asked Questions
           </h2>
-          <p className="mt-4 text-neutral-600 max-w-2xl mx-auto">
-            Find answers to common questions about our rental process, policies,
-            and services.
+          <p className="mt-4 text-neutral-600 text-lg max-w-2xl mx-auto">
+            Everything you need to know about our rental process, policies, and
+            more.
           </p>
         </div>
 
-        <div className="space-y-4">
+        {/* Accordion */}
+        <div className="space-y-6">
           <Accordion type="single" collapsible className="w-full">
             {faqItems.map((item, index) => (
               <AccordionItem
                 key={index}
                 value={`item-${index}`}
-                className="border border-neutral-200 rounded-md overflow-hidden"
+                className="bg-white border border-neutral-200 rounded-xl shadow-sm"
               >
-                <AccordionTrigger className="flex justify-between items-center w-full bg-neutral-50 px-4 py-3 text-left focus:outline-none text-lg font-medium text-neutral-800">
+                <AccordionTrigger className="flex justify-between items-center w-full px-6 py-5 text-left text-lg font-semibold text-neutral-800 hover:bg-neutral-100 transition">
                   {item.question}
                 </AccordionTrigger>
-                <AccordionContent className="px-4 py-3 bg-white text-neutral-600">
+                <AccordionContent className="px-6 pb-6 pt-2 text-neutral-600">
                   {item.answer}
                 </AccordionContent>
               </AccordionItem>
@@ -64,12 +66,13 @@ export default function FAQ() {
           </Accordion>
         </div>
 
-        <div className="mt-12 text-center">
-          <p className="text-neutral-600 mb-4">
-            Still have questions? Contact our customer support team.
+        {/* CTA */}
+        <div className="mt-20 text-center">
+          <p className="text-neutral-600 text-base mb-5">
+            Can’t find the answer you’re looking for?
           </p>
           <Link href="/contact-us">
-            <Button className="bg-primary hover:cursor-pointer">
+            <Button className="bg-primary text-white text-base px-6 py-3 rounded-lg shadow-md hover:bg-primary/90 transition">
               Contact Support
             </Button>
           </Link>

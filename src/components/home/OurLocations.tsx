@@ -9,43 +9,51 @@ import Link from "next/link";
 
 export default function OurLocations() {
   return (
-    <section className="py-16 bg-primary text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="lg:flex lg:items-center lg:justify-between">
-          <div className="lg:w-1/2">
-            <h2 className="text-3xl font-bold mb-4">Where can you find us</h2>
-            <p className="text-white/80 text-lg mb-8">
-              Our locations are close to the largest airport and port in
-              Albania.
+    <section className="relative bg-gradient-to-br from-primary to-indigo-800 py-24 text-white overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          {/* Left content */}
+          <div>
+            <h2 className="text-4xl font-bold tracking-tight sm:text-5xl mb-6">
+              Where You Can Find Us
+            </h2>
+            <p className="text-white/80 text-lg leading-relaxed mb-10">
+              Our rental points are strategically placed near Albania’s largest
+              transportation hubs — so your next journey starts faster.
             </p>
-            <div className="flex flex-wrap gap-4">
-              <Link href="/locations">
-                <div className="grid bg-black hover:bg-black/80 hover:cursor-pointer text-white py-3 px-6 rounded-lg transition duration-300">
-                  <div className="text-xs">Find us in</div>
-                  <div className="flex items-center gap-1">
-                    <FontAwesomeIcon
-                      className="align-bottom"
-                      icon={faPlaneDeparture}
-                    />
-                    <div className="text-lg font-semibold">Tirana Airport</div>
+
+            <div className="space-y-6">
+              <Link href="/locations" className="block group">
+                <div className="bg-black/80 p-6 rounded-xl hover:bg-black transition shadow-xl flex items-center gap-4">
+                  <div className="text-3xl text-amber-400 group-hover:scale-110 transition">
+                    <FontAwesomeIcon icon={faPlaneDeparture} />
+                  </div>
+                  <div>
+                    <p className="text-sm text-white/70">Available at</p>
+                    <h3 className="text-xl font-semibold">
+                      Tirana International Airport
+                    </h3>
                   </div>
                 </div>
               </Link>
-              <Link href="/locations">
-                <div className="grid bg-black hover:bg-black/80 hover:cursor-pointer text-white py-3 px-6 rounded-lg transition duration-300">
-                  <div className="text-xs">Find us in</div>
-                  <div className="flex items-center gap-1">
+
+              <Link href="/locations" className="block group">
+                <div className="bg-black/80 p-6 rounded-xl hover:bg-black transition shadow-xl flex items-center gap-4">
+                  <div className="text-3xl text-amber-400 group-hover:scale-110 transition">
                     <FontAwesomeIcon icon={faUmbrellaBeach} />
-                    <div className="text-lg font-semibold">
-                      <p>Durr&euml;s</p>
-                    </div>
+                  </div>
+                  <div>
+                    <p className="text-sm text-white/70">Available at</p>
+                    <h3 className="text-xl font-semibold">Durrës Port</h3>
                   </div>
                 </div>
               </Link>
             </div>
           </div>
-          <div className="mt-12 lg:mt-0 lg:w-1/2 flex justify-center">
-            <div className="grid w-full">
+
+          {/* Right map with frame */}
+          <div className="relative">
+            <div className="w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl border-4 border-white/10">
               <Map />
             </div>
           </div>

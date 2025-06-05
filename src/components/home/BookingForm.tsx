@@ -14,6 +14,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
+import { ArrowRight, CalendarDays, MapPin } from "lucide-react";
 
 const searchSchema = z.object({
   pickupDate: z.string().min(1, { message: "Please select a pickup date" }),
@@ -55,66 +56,34 @@ export default function BookingForm() {
   };
 
   return (
-    <section id="booking-form" className="py-12">
+    <section id="booking-form" className="py-16 relative z-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white rounded-lg shadow-lg -mt-16 md:-mt-24 relative z-10 p-6">
-          <h2 className="text-2xl font-bold text-neutral-800 mb-6">
-            Quick Booking
-          </h2>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/*<FormField*/}
-                {/*  control={form.control}*/}
-                {/*  name="pickupLocation"*/}
-                {/*  render={({ field }) => (*/}
-                {/*    <FormItem>*/}
-                {/*      <FormLabel className="text-sm font-medium text-neutral-700">*/}
-                {/*        Pick-up Location*/}
-                {/*      </FormLabel>*/}
-                {/*      <FormControl>*/}
-                {/*        <div className="relative">*/}
-                {/*          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">*/}
-                {/*            <FaMapMarkerAlt className="text-neutral-500" />*/}
-                {/*          </div>*/}
-                {/*          <Select*/}
-                {/*            onValueChange={field.onChange}*/}
-                {/*            defaultValue={field.value}*/}
-                {/*          >*/}
-                {/*            <SelectTrigger className="pl-10 pr-5 py-2 text-base border-neutral-300">*/}
-                {/*              <SelectValue placeholder="Select a location" />*/}
-                {/*            </SelectTrigger>*/}
-                {/*            <SelectContent>*/}
-                {/*              {locations.map((location) => (*/}
-                {/*                <SelectItem*/}
-                {/*                  key={location.id}*/}
-                {/*                  value={location.id.toString()}*/}
-                {/*                >*/}
-                {/*                  {location.name}*/}
-                {/*                </SelectItem>*/}
-                {/*              ))}*/}
-                {/*            </SelectContent>*/}
-                {/*          </Select>*/}
-                {/*        </div>*/}
-                {/*      </FormControl>*/}
-                {/*      <FormMessage />*/}
-                {/*    </FormItem>*/}
-                {/*  )}*/}
-                {/*/>*/}
+        <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl shadow-xl -mt-24 relative z-10 p-8 border border-indigo-100">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold text-indigo-900 mb-2">
+              Start Your Journey
+            </h2>
+            <p className="text-indigo-700">
+              Reserve your perfect vehicle in just a few clicks
+            </p>
+          </div>
 
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <FormField
                   control={form.control}
                   name="pickupDate"
                   render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-sm font-medium text-neutral-700">
+                    <FormItem className="space-y-2">
+                      <FormLabel className="text-sm font-medium text-indigo-800">
                         Pick-up Date
                       </FormLabel>
                       <FormControl>
                         <div className="relative">
                           <Input
                             type="date"
-                            className="pr-10 py-2 text-base border-neutral-300"
+                            className="bg-white border-indigo-200 focus:border-indigo-400 rounded-lg py-3 px-4 text-indigo-900 shadow-sm"
                             {...field}
                           />
                         </div>
@@ -128,15 +97,15 @@ export default function BookingForm() {
                   control={form.control}
                   name="returnDate"
                   render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-sm font-medium text-neutral-700">
+                    <FormItem className="space-y-2">
+                      <FormLabel className="text-sm font-medium text-indigo-800">
                         Return Date
                       </FormLabel>
                       <FormControl>
                         <div className="relative">
                           <Input
                             type="date"
-                            className="pr-10 py-2 text-base border-neutral-300"
+                            className="bg-white border-indigo-200 focus:border-indigo-400 rounded-lg py-3 px-4 text-indigo-900 shadow-sm"
                             {...field}
                           />
                         </div>
@@ -145,12 +114,16 @@ export default function BookingForm() {
                     </FormItem>
                   )}
                 />
-              </div>
 
-              <div className="flex justify-end">
-                <Button type="submit" className="btn-primary">
-                  Search Available Cars
-                </Button>
+                <div className="flex items-end">
+                  <Button
+                    type="submit"
+                    className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white py-3 px-6 rounded-lg shadow-md transition-all transform hover:scale-105"
+                  >
+                    Find Vehicles
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </div>
               </div>
             </form>
           </Form>

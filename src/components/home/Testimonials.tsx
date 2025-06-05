@@ -18,33 +18,33 @@ export default function Testimonials() {
       id: 1,
       rating: 5,
       comment:
-        "The service was exceptional! The car was clean, well-maintained, and the pickup process was smooth. I will definitely be renting from Gold Car Rental again.",
+        "Fantastic experience from start to finish. The car was spotless and ran like new. The team went above and beyond to make the process stress-free.",
       user: {
         id: 1,
-        fullName: "Alban Hoxha",
-        location: "Saranda, Albania",
+        fullName: "Elira Dervishi",
+        location: "Tirana, Albania",
       },
     },
     {
       id: 2,
       rating: 4,
       comment:
-        "Great selection of vehicles at reasonable prices. The BMW I rented was in perfect condition and made my business trip much more enjoyable. Highly recommend!",
+        "Efficient service and a smooth rental process. The vehicle matched the listing exactly and staff were professional. Just wish pickup was a bit quicker.",
       user: {
         id: 2,
-        fullName: "Miguel Gomez",
-        location: "Sevilla, Spain",
+        fullName: "James Bennett",
+        location: "Manchester, UK",
       },
     },
     {
       id: 3,
       rating: 5,
       comment:
-        "The app made booking so easy! I was able to select my car, pay, and arrange pickup all within minutes. The staff was friendly and helpful. Will use again!",
+        "Loved the convenience of booking online and picking up right at the airport. Prices were fair and the car performed great throughout our trip.",
       user: {
         id: 3,
-        fullName: "Aurora Ricci",
-        location: "Bologna, Italy",
+        fullName: "Sofia Müller",
+        location: "Munich, Germany",
       },
     },
   ];
@@ -67,26 +67,26 @@ export default function Testimonials() {
   };
 
   return (
-    <section className="py-16 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-neutral-800">
+    <section className="py-20 bg-indigo-50">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-extrabold text-indigo-900">
             What Our Customers Say
           </h2>
-          <p className="mt-4 text-neutral-600 max-w-2xl mx-auto">
-            Don&#39;t take our word for it – hear what our satisfied customers
-            have to say about their rental experience.
+          <p className="mt-4 text-lg text-indigo-700 max-w-2xl mx-auto">
+            Don’t just take our word for it — see how we’ve made a difference
+            for our customers.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {isLoading
             ? Array(3)
                 .fill(0)
                 .map((_, index) => (
                   <div
                     key={index}
-                    className="bg-neutral-50 p-6 rounded-lg shadow-sm"
+                    className="bg-white border-t-4 border-amber-400 p-6 rounded-xl shadow-md"
                   >
                     <Skeleton className="h-4 w-24 mb-4" />
                     <Skeleton className="h-16 w-full mb-4" />
@@ -102,26 +102,26 @@ export default function Testimonials() {
             : testimonialsToShow.map((testimonial) => (
                 <div
                   key={testimonial.id}
-                  className="bg-neutral-50 p-6 rounded-lg shadow-sm"
+                  className="bg-white border-t-4 border-amber-400 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300"
                 >
-                  <div className="flex text-warning mb-4">
+                  <div className="flex text-amber-500 mb-3">
                     {renderStars(testimonial.rating)}
                   </div>
-                  <p className="italic text-neutral-600 mb-4">
-                    {testimonial.comment}
+                  <p className="italic text-indigo-800 mb-5 text-sm">
+                    “{testimonial.comment}”
                   </p>
                   <div className="flex items-center">
-                    <button className="p-2 rounded-full hover:bg-neutral-100 flex items-center justify-center">
+                    <div className="bg-indigo-100 p-2 rounded-full">
                       <FontAwesomeIcon
                         icon={faUserCircle}
-                        className="text-neutral-500 text-3xl"
+                        className="text-indigo-500 text-xl"
                       />
-                    </button>
+                    </div>
                     <div className="ml-3">
-                      <h4 className="text-sm font-medium text-neutral-800">
+                      <h4 className="text-sm font-semibold text-indigo-900">
                         {testimonial.user?.fullName}
                       </h4>
-                      <p className="text-sm text-neutral-500">
+                      <p className="text-sm text-indigo-600">
                         {testimonial.user?.location || "Happy Customer"}
                       </p>
                     </div>

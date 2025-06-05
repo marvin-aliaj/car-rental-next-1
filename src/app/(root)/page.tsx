@@ -33,12 +33,10 @@ export default function Home() {
     <>
       <HeroSection />
       <BookingForm />
-      <FeaturedCars />
       <WhyChooseUs />
       <Testimonials />
       <OurLocations />
       <FAQ />
-      <Newsletter />
     </>
   );
 }
