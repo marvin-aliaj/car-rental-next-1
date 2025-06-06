@@ -69,7 +69,6 @@ declare type Account = {
 };
 
 declare type Filters = {
-  location: string;
   transmission: string;
   minPrice: number;
   maxPrice: number;

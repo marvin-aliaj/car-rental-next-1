@@ -67,11 +67,6 @@ export default function CarList({ startDate, endDate, filters }: CarListProps) {
     setCurrentPage(1);
     if (filters) {
       let filteredCars = cars;
-      if (filters.location) {
-        filteredCars = filteredCars.filter(
-          (car: Car) => car.location === filters.location,
-        );
-      }
 
       if (filters.minPrice !== undefined) {
         filteredCars = filteredCars.filter(

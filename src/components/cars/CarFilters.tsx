@@ -8,15 +8,10 @@ import { FaFilter } from "react-icons/fa";
 
 interface CarFiltersProps {
   onFilterChange: (filters: Filters) => void;
-  location: string;
 }
 
-export default function CarFilters({
-  onFilterChange,
-  location,
-}: CarFiltersProps) {
+export default function CarFilters({ onFilterChange }: CarFiltersProps) {
   const [transmissionType, setTransmissionType] = useState<string>(null);
-  const [locationFilter, setLocationFilter] = useState<string>(location);
   const [priceRange, setPriceRange] = useState([0, 200]);
   const [passengerCapacity, setPassengerCapacity] = useState<string>(null);
   const [fuelType, setFuelType] = useState<string>(null);
@@ -47,7 +42,6 @@ export default function CarFilters({
 
   const applyFilters = () => {
     const filters: Filters = {
-      location: locationFilter,
       transmission: transmissionType,
       minPrice: priceRange[0],
       maxPrice: priceRange[1],
