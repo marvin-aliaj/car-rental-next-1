@@ -29,14 +29,10 @@ interface CarListProps {
   locationObj?: { id: string; name: string };
   startDate?: string;
   endDate?: string;
-  filters?: Record<string, any>;
+  filters?: Filters;
 }
 
-export default function CarList({
-  startDate,
-  endDate,
-  filters = {},
-}: CarListProps) {
+export default function CarList({ startDate, endDate, filters }: CarListProps) {
   const globalCars = useStore((state) => state.cars);
   const [sortOption, setSortOption] = useState("price-asc");
   const [currentPage, setCurrentPage] = useState(1);
@@ -119,8 +115,6 @@ export default function CarList({
         );
       }
       setAllCars(filteredCars);
-      const indexOfLastCar = currentPage * carsPerPage;
-      const indexOfFirstCar = indexOfLastCar - carsPerPage;
       handleSortChange(sortOption, filteredCars);
     }
   }, [filters]);

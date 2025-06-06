@@ -15,7 +15,7 @@ import { useEffect } from "react";
 export default function Home() {
   const setGlobalCars = useStore((state) => state.setCars);
 
-  const getCarList = (params?: any) => {
+  const getCarList = (params: {}) => {
     getCars(params)
       .then((data) => {
         setGlobalCars(data);

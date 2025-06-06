@@ -9,7 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 const CarsPage = () => {
   const [searchParams, setSearchParams] = useState(null);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
-  const [filters, setFilters] = useState<Record<string, any>>({});
+  const [filters, setFilters] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
   const startDate = searchParams?.get("start");
@@ -20,7 +20,7 @@ const CarsPage = () => {
     setShowMobileFilters(!showMobileFilters);
   };
 
-  const handleFilterChange = (newFilters: Record<string, any>) => {
+  const handleFilterChange = (newFilters) => {
     setFilters(newFilters);
   };
 

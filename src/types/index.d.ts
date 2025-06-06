@@ -68,24 +68,13 @@ declare type Account = {
   currency: Currency;
 };
 
-declare type Transaction = {
-  id: number;
-  $id: string;
-  name: string;
-  paymentChannel: string;
-  type: string;
-  status: string;
-  accountId: string;
-  amount: number;
-  pending: boolean;
-  category: string;
-  cDate: string;
-  image: string;
-  $createdAt: string;
-  channel: string;
-  senderAccount: Account;
-  receiverAccount: Account;
-  currency: Currency;
+declare type Filters = {
+  location: string;
+  transmission: string;
+  minPrice: number;
+  maxPrice: number;
+  seats: string;
+  fuelType: string;
 };
 
 declare module "react-helmet";
