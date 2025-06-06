@@ -14,7 +14,6 @@ const CarsPage = () => {
 
   const startDate = searchParams?.get("start");
   const endDate = searchParams?.get("end");
-  const location = searchParams?.get("pickup");
 
   const toggleMobileFilters = () => {
     setShowMobileFilters(!showMobileFilters);
