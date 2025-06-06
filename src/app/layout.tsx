@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,8 +14,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AutoRental - Find and Book Your Perfect Car",
-  description: "Find and book your perfect rental car with AutoRental. Choose from our wide selection of vehicles at competitive prices with exceptional service.",
+  title: "Gold Car Rent - Find and Book Your Perfect Car",
+  description:
+    "Find and book your perfect rental car with Gold Car Rent. Choose from our wide selection of vehicles at competitive prices with exceptional service.",
+  icons: {
+    icon: "/car-rental-icon.png",
+  },
 };
 
 export default function RootLayout({
@@ -29,9 +32,8 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-      <Header />
+        <Toaster />
         {children}
-      <Footer />
       </body>
     </html>
   );
