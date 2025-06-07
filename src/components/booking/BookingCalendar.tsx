@@ -57,18 +57,33 @@ export default function BookingCalendar({
         </div>
         <div className="[&_.rdp-months]:gap-12">
           {" "}
-          <DayPicker
-            mode="range"
-            selected={date}
-            numberOfMonths={2}
-            disabled={{ before: today }}
-            className="rounded-md border"
-            classNames={{
-              months: "flex justify-center gap-20",
-              month: "w-[280px]",
-            }}
-            onSelect={handleSelect}
-          />
+          <div className="block sm:hidden">
+            <DayPicker
+              mode="range"
+              selected={date}
+              numberOfMonths={1}
+              disabled={{ before: today }}
+              onSelect={handleSelect}
+              className="rounded-md border"
+              classNames={{
+                months: "flex justify-center",
+              }}
+            />
+          </div>
+          {/* For screens sm and up: 2 months */}
+          <div className="hidden sm:block">
+            <DayPicker
+              mode="range"
+              selected={date}
+              numberOfMonths={2}
+              disabled={{ before: today }}
+              onSelect={handleSelect}
+              className="rounded-md border"
+              classNames={{
+                months: "flex justify-center gap-20",
+              }}
+            />
+          </div>
         </div>
       </CardContent>
     </Card>
