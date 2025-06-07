@@ -41,7 +41,6 @@ export default function BookingConfirmation({
             <h4 className="font-medium text-neutral-900">
               {car?.brand} {car?.model}
             </h4>
-            <p className="text-neutral-600">{car?.category}</p>
           </div>
 
           <div className="space-y-4 mb-6">

@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { format } from "date-fns";
-import { Calendar } from "@/components/ui/calendar";
 import { Card, CardContent } from "@/components/ui/card";
-import { DateRange } from "react-day-picker";
+import { DateRange, DayPicker } from "react-day-picker";
+import "react-day-picker/dist/style.css";
 
 interface BookingCalendarProps {
   onRangeChange: (range: { from: Date; to: Date }) => void;
@@ -57,18 +57,33 @@ export default function BookingCalendar({
         </div>
         <div className="[&_.rdp-months]:gap-12">
           {" "}
-          <Calendar
-            mode="range"
-            selected={date}
-            onSelect={handleSelect}
-            numberOfMonths={2}
-            disabled={{ before: today }}
-            className="rounded-md border"
-            classNames={{
-              months: "flex justify-center",
-              month: "w-[280px]",
-            }}
-          />
+          <div className="block sm:hidden">
+            <DayPicker
+              mode="range"
+              selected={date}
+              numberOfMonths={1}
+              disabled={{ before: today }}
+              onSelect={handleSelect}
+              className="rounded-md border"
+              classNames={{
+                months: "flex justify-center",
+              }}
+            />
+          </div>
+          {/* For screens sm and up: 2 months */}
+          <div className="hidden sm:block">
+            <DayPicker
+              mode="range"
+              selected={date}
+              numberOfMonths={2}
+              disabled={{ before: today }}
+              onSelect={handleSelect}
+              className="rounded-md border"
+              classNames={{
+                months: "flex justify-center gap-20",
+              }}
+            />
+          </div>
         </div>
       </CardContent>
     </Card>

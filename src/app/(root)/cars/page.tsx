@@ -9,18 +9,17 @@ import { Skeleton } from "@/components/ui/skeleton";
 const CarsPage = () => {
   const [searchParams, setSearchParams] = useState(null);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
-  const [filters, setFilters] = useState<Record<string, any>>({});
+  const [filters, setFilters] = useState<Filters>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   const startDate = searchParams?.get("start");
   const endDate = searchParams?.get("end");
-  const location = searchParams?.get("pickup");
 
   const toggleMobileFilters = () => {
     setShowMobileFilters(!showMobileFilters);
   };
 
-  const handleFilterChange = (newFilters: Record<string, any>) => {
+  const handleFilterChange = (newFilters) => {
     setFilters(newFilters);
   };
 
@@ -89,10 +88,7 @@ const CarsPage = () => {
 
             {showMobileFilters && (
               <div className="mt-4 p-4 bg-white border border-neutral-200 rounded-lg shadow-sm">
-                <CarFilters
-                  onFilterChange={handleFilterChange}
-                  location={location}
-                />
+                <CarFilters onFilterChange={handleFilterChange} />
               </div>
             )}
           </div>
@@ -100,10 +96,7 @@ const CarsPage = () => {
           <div className="lg:grid lg:grid-cols-12 lg:gap-8">
             {/* Filters Sidebar - Desktop */}
             <div className="hidden lg:block lg:col-span-3">
-              <CarFilters
-                onFilterChange={handleFilterChange}
-                location={location}
-              />
+              <CarFilters onFilterChange={handleFilterChange} />
             </div>
 
             {/* Car Listings */}

@@ -2,13 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { format, subDays } from "date-fns";
-import { Calendar } from "@/components/ui/calendar";
-import { DateRange } from "react-day-picker";
+import { DateRange, DayPicker } from "react-day-picker";
 import { FaCalendar } from "react-icons/fa";
 import { getBookings } from "@/lib/actions/rental.actions";
 import { toast } from "sonner";
 import { Skeleton } from "@/components/ui/skeleton";
 import { locations } from "@/lib/utils";
+import "react-day-picker/dist/style.css";
 
 type Booking = {
   id: string;
@@ -35,9 +35,11 @@ export default function AdminBookings() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
   const handleSelect = (range: DateRange | undefined) => {
-    if (range) {
-      setDateRange(range);
+    if (range === undefined) {
+      setDateRange({ from: undefined, to: undefined });
+      return;
     }
+    setDateRange({ from: range.from, to: range.to });
   };
 
   useEffect(() => {
@@ -107,12 +109,16 @@ export default function AdminBookings() {
             </button>
             {showDatePicker && (
               <div className="absolute z-10 mt-2 bg-white p-4 rounded-lg shadow-lg border border-gray-200">
-                <Calendar
+                <DayPicker
                   mode="range"
                   selected={dateRange}
-                  onSelect={handleSelect}
                   numberOfMonths={2}
-                  className="border rounded-md"
+                  className="rounded-md border"
+                  classNames={{
+                    months: "flex justify-center gap-20",
+                    month: "w-[280px]",
+                  }}
+                  onSelect={handleSelect}
                 />
               </div>
             )}
@@ -139,12 +145,15 @@ export default function AdminBookings() {
               <label className="block text-sm font-medium mb-1">
                 Date Range
               </label>
-              <Calendar
+              <DayPicker
                 mode="range"
                 selected={dateRange}
+                className="rounded-md border"
+                classNames={{
+                  months: "flex justify-center gap-20",
+                  month: "w-[280px]",
+                }}
                 onSelect={handleSelect}
-                numberOfMonths={1}
-                className="border rounded-md"
               />
             </div>
 
