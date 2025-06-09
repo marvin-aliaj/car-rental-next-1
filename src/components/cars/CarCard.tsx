@@ -62,7 +62,7 @@ export default function CarCard({ car, enableHover = false }: CarCardProps) {
           {/* Bottom Section */}
           <div className="text-sm">
             <div className="mt-2">
-              <span className="text-2xl font-bold">${car.pricePerDay}</span>
+              <span className="text-2xl font-bold">€{car.pricePerDay}</span>
               <span className="text-base text-gray-300"> /day</span>
             </div>
           </div>
