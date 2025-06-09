@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { timeSlots } from "@/lib/utils";
 import {
   Select,
