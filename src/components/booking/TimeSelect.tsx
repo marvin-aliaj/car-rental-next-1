@@ -16,15 +16,12 @@ interface PickupTimeSelectProps {
 }
 
 export function TimeSelect({ value, onChange }: PickupTimeSelectProps) {
-  const [open, setOpen] = useState(false);
-
   return (
     <div className="w-full">
       <Select
         value={value}
         onValueChange={(val) => {
           onChange(val);
-          setOpen(false);
         }}
       >
         <SelectTrigger className="w-full border-0 shadow-none focus:ring-0">

@@ -86,18 +86,18 @@ export default function BookingConfirmation({
                 {car?.pricePerDay}/day)
               </p>
               <p className="font-medium text-neutral-800">
-                ${basePrice.toFixed(2)}
+                €{basePrice.toFixed(2)}
               </p>
             </div>
             <div className="flex justify-between mb-4">
               <p className="text-neutral-600">Taxes & Fees</p>
               <p className="font-medium text-neutral-800">
-                ${taxes.toFixed(2)}
+                €{taxes.toFixed(2)}
               </p>
             </div>
             <div className="flex justify-between text-lg font-bold">
               <p className="text-neutral-900">Total</p>
-              <p className="text-primary">${totalPrice.toFixed(2)}</p>
+              <p className="text-primary">€{totalPrice.toFixed(2)}</p>
             </div>
           </div>
         </>

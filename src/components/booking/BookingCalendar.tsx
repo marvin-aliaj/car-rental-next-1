@@ -50,9 +50,9 @@ export default function BookingCalendar({
     const [pickupHour, pickupMinute] = pickupTime_.split(":").map(Number);
     const [returnHour, returnMinute] = returnTime_.split(":").map(Number);
     if (range?.from && range?.to) {
-      let pickupDate = range.from;
+      const pickupDate = range.from;
       pickupDate.setHours(pickupHour, pickupMinute);
-      let returnDate = range.to;
+      const returnDate = range.to;
       returnDate.setHours(returnHour, returnMinute);
 
       setDate({ from: range.from, to: range.to });
