@@ -49,7 +49,7 @@ export default function BookingConfirmation({
                 <p className="text-sm text-neutral-500">Pick-up</p>
                 <p className="font-medium text-neutral-800">
                   {dateRange.from
-                    ? format(dateRange.from, "EEE, MMM d, yyyy")
+                    ? format(dateRange.from, "EEE, MMM d, yyyy, HH:mm")
                     : ""}
                 </p>
               </div>
@@ -65,7 +65,9 @@ export default function BookingConfirmation({
               <div>
                 <p className="text-sm text-neutral-500">Return</p>
                 <p className="font-medium text-neutral-800">
-                  {dateRange.to ? format(dateRange.to, "EEE, MMM d, yyyy") : ""}
+                  {dateRange.to
+                    ? format(dateRange.to, "EEE, MMM d, yyyy, HH:mm")
+                    : ""}
                 </p>
               </div>
               <div className="text-right">

@@ -230,6 +230,12 @@ export default function AdminBookings() {
                       Dates
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Pickup
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Return
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Status
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -258,6 +264,12 @@ export default function AdminBookings() {
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                         {format(booking.startDate, "MMM dd")} -{" "}
                         {format(booking.endDate, "MMM dd, yyyy")}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {format(booking.startDate, "HH:mm")}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {format(booking.endDate, "HH:mm")}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span

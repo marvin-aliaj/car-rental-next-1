@@ -106,8 +106,8 @@ export default function Booking() {
       customerPhone: customerInfo.phone,
       location: selectedLocationId,
       carId: carId,
-      startDate: format(dateRange.from, "yyyy-MM-dd"),
-      endDate: format(dateRange.to, "yyyy-MM-dd"),
+      startDate: format(dateRange.from, "yyyy-MM-dd HH:mm:ss"),
+      endDate: format(dateRange.to, "yyyy-MM-dd HH:mm:ss"),
       calculatedPrice: totalPrice * 100, // Convert to string as required by the schema
       status: "PENDING",
     };
