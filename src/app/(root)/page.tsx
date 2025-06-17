@@ -21,7 +21,7 @@ export default function Home() {
         setGlobalCars(data);
       })
       .catch((e) => {
-        toast.error(e.message);
+        toast.error("Error occurred!");
       });
   };
 
@@ -38,7 +38,7 @@ export default function Home() {
       <Testimonials />
       <OurLocations />
       <FAQ />
-      <Newsletter />
+      {/*<Newsletter />*/}
     </>
   );
 }

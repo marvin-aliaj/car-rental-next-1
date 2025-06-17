@@ -104,7 +104,7 @@ export default function CarList({ startDate, endDate, filters }: CarListProps) {
           setCars(data);
         })
         .catch((e) => {
-          toast.error(e.message);
+          toast.error("Error occurred!");
         })
         .finally(() => {
           setIsLoading(false);

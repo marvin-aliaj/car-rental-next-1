@@ -142,12 +142,14 @@ const ContactPage = () => {
               <div className="space-y-3">
                 <div className="flex items-center">
                   <Phone className="h-5 w-5 text-primary mr-3" />
-                  <span className="text-gray-700">+355 4 238 1600</span>
+                  <span className="text-gray-700">+355 68 409 3623</span>
                 </div>
 
                 <div className="flex items-center">
                   <Mail className="h-5 w-5 text-primary mr-3" />
-                  <span className="text-gray-700">contact@carrental.com</span>
+                  <span className="text-gray-700">
+                    goldcarsalbania0@gmail.com
+                  </span>
                 </div>
 
                 <div className="flex items-center">

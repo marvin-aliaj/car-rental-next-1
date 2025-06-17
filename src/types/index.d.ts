@@ -16,11 +16,11 @@ declare type Location = {
 // ========================================
 
 declare type Car = {
-  id: string;
+  id?: string;
   brand: string;
   model: string;
   year: number;
-  type: string;
+  type?: string;
   transmission: string;
   engine: string;
   fuelType: string;
@@ -28,13 +28,13 @@ declare type Car = {
   bags: number;
   lkm: string;
   pricePerDay: number;
-  available: boolean;
+  available?: boolean;
   features: string;
   imageUrl: string;
   description: string;
   reviewStars: number;
   reviewerCount: number;
-  location: string;
+  location?: string;
 };
 
 declare type User = {
@@ -56,16 +56,6 @@ declare type Review = {
 declare type Currency = {
   code: string;
   symbol: string;
-};
-
-declare type Account = {
-  id: number;
-  accountNumber: string;
-  balance: number;
-  name: string;
-  description: string;
-  color: string;
-  currency: Currency;
 };
 
 declare type Filters = {

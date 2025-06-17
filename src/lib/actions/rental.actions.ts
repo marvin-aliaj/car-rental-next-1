@@ -10,6 +10,14 @@ export const getCars = async (params) => {
   }
 };
 
+export const createCar = async (body) => {
+  try {
+    return await post("/cars", body);
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const getBookings = async (params) => {
   try {
     return await get("/bookings", params);

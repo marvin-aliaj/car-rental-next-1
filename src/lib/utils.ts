@@ -5,6 +5,18 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+export function validateEmail(email) {
+  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return re.test(email);
+}
+
+export function validateGeneralPhone(phone) {
+  // Allows +, numbers, spaces, hyphens, parentheses
+  const re = /^[\+\d][\d\s\-\(\)]{7,}$/;
+  const digits = phone.replace(/[^\d]/g, "");
+  return re.test(phone) && digits.length >= 8 && digits.length <= 15;
+}
+
 export const locations = [
   { id: "DR", name: "Durrës" },
   { id: "TIA", name: "Tirana Airport" },
