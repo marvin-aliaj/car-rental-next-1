@@ -24,21 +24,20 @@ import { GiGearStickPattern } from "react-icons/gi";
 import CarCard from "@/components/cars/CarCard";
 import { getCars } from "@/lib/actions/rental.actions";
 import { toast } from "sonner";
+import { Search } from "lucide-react";
+import { Input } from "@/components/ui/input";
 
 interface CarListProps {
   locationObj?: { id: string; name: string };
   startDate?: string;
   endDate?: string;
-  filters?: Record<string, any>;
+  filters?: Filters;
 }
 
-export default function CarList({
-  startDate,
-  endDate,
-  filters = {},
-}: CarListProps) {
+export default function CarList({ startDate, endDate, filters }: CarListProps) {
   const globalCars = useStore((state) => state.cars);
   const [sortOption, setSortOption] = useState("price-asc");
+  const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [cars, setCars] = useState([]);
   const [allCars, setAllCars] = useState([]);
@@ -49,6 +48,54 @@ export default function CarList({
   const totalCars = allCars.length;
   let totalPages = Math.ceil(totalCars / carsPerPage);
 
+  const filterCars = () => {
+    let filteredCars = cars;
+
+    if (filters?.minPrice !== undefined) {
+      filteredCars = filteredCars.filter(
+        (car: Car) => Number(car.pricePerDay) >= filters.minPrice!,
+      );
+    }
+
+    if (filters?.maxPrice !== undefined) {
+      filteredCars = filteredCars.filter(
+        (car: Car) => Number(car.pricePerDay) <= filters.maxPrice!,
+      );
+    }
+
+    if (filters?.seats) {
+      switch (filters.seats) {
+        case "2":
+          filteredCars = filteredCars.filter((car: Car) => car.seats <= 4);
+          break;
+        case "5":
+          filteredCars = filteredCars.filter(
+            (car: Car) => Number(car.seats) > 4 && Number(car.seats) <= 6,
+          );
+          break;
+        case "7":
+          filteredCars = filteredCars.filter(
+            (car: Car) => Number(car.seats) >= 7,
+          );
+          break;
+      }
+    }
+
+    if (filters?.transmission) {
+      filteredCars = filteredCars.filter(
+        (car: Car) => car.transmission === filters.transmission,
+      );
+    }
+
+    if (filters?.fuelType) {
+      filteredCars = filteredCars.filter(
+        (car: Car) => car.fuelType === filters.fuelType,
+      );
+    }
+    setAllCars(filteredCars);
+    handleSortChange(sortOption, filteredCars);
+  };
+
   useEffect(() => {
     setIsLoading(true);
     if (startDate && endDate) {
@@ -56,8 +103,8 @@ export default function CarList({
         .then((data) => {
           setCars(data);
         })
-        .catch((e) => {
-          toast.error(e.message);
+        .catch(() => {
+          toast.error("Error occurred!");
         })
         .finally(() => {
           setIsLoading(false);
@@ -70,60 +117,23 @@ export default function CarList({
   useEffect(() => {
     setCurrentPage(1);
     if (filters) {
-      let filteredCars = cars;
-      if (filters.location) {
-        filteredCars = filteredCars.filter(
-          (car: Car) => car.location === filters.location,
-        );
-      }
-
-      if (filters.minPrice !== undefined) {
-        filteredCars = filteredCars.filter(
-          (car: Car) => Number(car.pricePerDay) >= filters.minPrice!,
-        );
-      }
-
-      if (filters.maxPrice !== undefined) {
-        filteredCars = filteredCars.filter(
-          (car: Car) => Number(car.pricePerDay) <= filters.maxPrice!,
-        );
-      }
-
-      if (filters.seats) {
-        switch (filters.seats) {
-          case "2":
-            filteredCars = filteredCars.filter((car: Car) => car.seats <= 4);
-            break;
-          case "5":
-            filteredCars = filteredCars.filter(
-              (car: Car) => Number(car.seats) > 4 && Number(car.seats) <= 6,
-            );
-            break;
-          case "7":
-            filteredCars = filteredCars.filter(
-              (car: Car) => Number(car.seats) >= 7,
-            );
-            break;
-        }
-      }
-
-      if (filters.transmission) {
-        filteredCars = filteredCars.filter(
-          (car: Car) => car.transmission === filters.transmission,
-        );
-      }
-
-      if (filters.fuelType) {
-        filteredCars = filteredCars.filter(
-          (car: Car) => car.fuelType === filters.fuelType,
-        );
-      }
-      setAllCars(filteredCars);
-      const indexOfLastCar = currentPage * carsPerPage;
-      const indexOfFirstCar = indexOfLastCar - carsPerPage;
-      handleSortChange(sortOption, filteredCars);
+      filterCars();
     }
   }, [filters]);
+
+  useEffect(() => {
+    if (searchQuery.length > 2) {
+      const searchLower = searchQuery.toLowerCase();
+      const filteredCars = allCars.filter(
+        (car: Car) =>
+          car.model.toLowerCase().includes(searchLower) ||
+          car.brand.toLowerCase().includes(searchLower),
+      );
+      setAllCars(filteredCars);
+    } else {
+      filterCars();
+    }
+  }, [searchQuery]);
 
   useEffect(() => {
     setAllCars(cars);
@@ -198,7 +208,18 @@ export default function CarList({
 
   return (
     <div className="mt-8 lg:mt-0 lg:col-span-9">
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex flex-wrap gap-5 justify-between items-center mb-6">
+        <div className="relative w-full md:w-auto">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+          <Input
+            type="text"
+            placeholder="Search cars..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-10 pr-4 py-2 w-full md:w-64 border-gray-300 rounded-md focus:ring-primary focus:border-primary"
+          />
+        </div>
+
         {/*<h2 className="text-2xl font-bold text-neutral-800">Available Cars</h2>*/}
         <div className="flex items-center gap-2">
           <p className="text-sm text-neutral-600 whitespace-nowrap">Sort by:</p>
@@ -263,7 +284,7 @@ export default function CarList({
             >
               <div className="md:flex">
                 <CarCard car={car} />
-                <div className="md:w-2/3 ">
+                <div className="md:w-2/3 pb-2">
                   <div className="p-6 md:flex md:justify-between md:items-start">
                     <div>
                       <div className="uppercase tracking-wide text-xs text-secondary font-semibold">
@@ -311,7 +332,7 @@ export default function CarList({
                     <div className="mt-4 md:mt-0 md:ml-6 flex flex-col items-end">
                       <div className="text-right">
                         <span className="text-2xl font-bold text-primary">
-                          ${car.pricePerDay}
+                          €{car.pricePerDay}
                         </span>
                         <span className="text-sm text-neutral-500">/day</span>
                       </div>
@@ -331,7 +352,7 @@ export default function CarList({
                       </Link>
                     </div>
                   </div>
-                  <div className="px-6 hidden md:block">
+                  <div className="px-6 lg:hidden xl:block">
                     {car.description && (
                       <p className=" text-sm text-neutral-600 max-w-full">
                         {car.description}
