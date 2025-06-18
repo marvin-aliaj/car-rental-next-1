@@ -47,7 +47,7 @@ export default function Booking() {
       .then(() => {
         router.push("/admin-panel");
       })
-      .catch((e) => {
+      .catch(() => {
         toast.error("Error occurred!");
       })
       .finally(() => {

@@ -142,7 +142,7 @@ export default function Booking() {
         toast.success("Booking created successfully");
         router.push(`/cars`);
       })
-      .catch((e) => {
+      .catch(() => {
         toast.error("Error occurred!");
       });
   };

@@ -87,7 +87,7 @@ export default function Footer() {
               </li>
               <li className="flex items-center">
                 <i className="fas fa-envelope mr-3"></i>
-                <span>goldcarsalbania0@gmail.com</span>
+                <span>reservation@goldcarsalbania.com</span>
               </li>
               <li className="flex items-center">
                 <i className="fas fa-clock mr-3"></i>
