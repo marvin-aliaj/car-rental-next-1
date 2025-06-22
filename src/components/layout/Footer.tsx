@@ -103,7 +103,7 @@ export default function Footer() {
             reserved.
           </p>
           <div className="mt-4 md:mt-0 flex flex-wrap gap-4 text-sm text-neutral-400">
-            <Link href="#faq">
+            <Link href="/#faq">
               <span className="hover:text-white transition-colors duration-300">
                 Customer Support
               </span>
