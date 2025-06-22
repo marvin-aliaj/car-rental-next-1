@@ -12,7 +12,12 @@ import { Input } from "@/components/ui/input";
 import { useStore } from "@/store/useStore";
 import { Skeleton } from "@/components/ui/skeleton";
 import { createBooking } from "@/lib/actions/rental.actions";
-import { locations, validateEmail, validateGeneralPhone } from "@/lib/utils";
+import {
+  decryptId,
+  locations,
+  validateEmail,
+  validateGeneralPhone,
+} from "@/lib/utils";
 import {
   Select,
   SelectContent,
@@ -27,7 +32,7 @@ export default function Booking() {
   const [car, setCar] = useState<Car | null>(null);
   const [searchParams, setSearchParams] = useState(null);
   const params = useParams();
-  const carId = params.id;
+  const carId = decryptId(params.id);
   const router = useRouter();
 
   const initialLocationId = searchParams?.get("locationId");

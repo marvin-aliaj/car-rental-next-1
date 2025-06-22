@@ -22,9 +22,31 @@ export const locations = [
   { id: "TIA", name: "Tirana Airport" },
 ];
 
-export const findLocationByName = (name: string) => {
-  return locations.find((x) => x.name === name);
-};
+export function encryptId(id) {
+  try {
+    const base64 = btoa(id);
+    // Replace '+' with '-', '/' with '_', and remove '=' padding
+    return base64.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+  } catch (error) {
+    console.error("Error encoding ID:", error);
+    return null;
+  }
+}
+
+// URL-safe base64 decoding
+export function decryptId(encryptedId) {
+  try {
+    // Add back missing '=' padding before decoding
+    let base64 = encryptedId.replace(/-/g, "+").replace(/_/g, "/");
+    while (base64.length % 4) {
+      base64 += "=";
+    }
+    return atob(base64);
+  } catch (error) {
+    console.error("Error decoding ID:", error);
+    return null;
+  }
+}
 
 export const timeSlots = [
   "06:00",

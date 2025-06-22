@@ -26,6 +26,7 @@ import { getCars } from "@/lib/actions/rental.actions";
 import { toast } from "sonner";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { encryptId } from "@/lib/utils";
 
 interface CarListProps {
   locationObj?: { id: string; name: string };
@@ -342,11 +343,13 @@ export default function CarList({ startDate, endDate, filters }: CarListProps) {
                       <Link
                         href={
                           startDate !== null
-                            ? `/booking/${car.id}?start=${startDate}&end=${endDate}`
-                            : `/booking/${car.id}`
+                            ? `/booking/${encryptId(
+                                car.id.toString(),
+                              )}?start=${startDate}&end=${endDate}`
+                            : `/booking/${encryptId(car.id.toString())}`
                         }
                       >
-                        <Button className="mt-4 bg-primary hover:bg-primary/90 text-white font-medium rounded-md px-6 py-2 text-center shadow-sm transition duration-300 ease-in-out">
+                        <Button className="mt-4 bg-primary hover:bg-primary/90 text-white font-medium rounded-md px-6 py-2 text-center shadow-sm transition duration-300 ease-in-out hover:cursor-pointer">
                           Book Now
                         </Button>
                       </Link>
