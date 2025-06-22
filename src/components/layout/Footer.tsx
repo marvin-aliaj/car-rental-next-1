@@ -49,13 +49,6 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/about">
-                  <span className="text-neutral-400 hover:text-white transition-colors duration-300">
-                    About Us
-                  </span>
-                </Link>
-              </li>
-              <li>
                 <Link href="/cars">
                   <span className="text-neutral-400 hover:text-white transition-colors duration-300">
                     Cars
@@ -86,15 +79,15 @@ export default function Footer() {
             <ul className="space-y-2 text-neutral-400">
               <li className="flex items-start">
                 <i className="fas fa-map-marker-alt mt-1 mr-3"></i>
-                <span>Sheshi Liria, Durrës 2001, Albania</span>
+                <span>Mother Tereza Airport, Rinas, Albania</span>
               </li>
               <li className="flex items-center">
                 <i className="fas fa-phone-alt mr-3"></i>
-                <span>+355 123-4567</span>
+                <span>+355 68 409 3623</span>
               </li>
               <li className="flex items-center">
                 <i className="fas fa-envelope mr-3"></i>
-                <span>info@autorental.com</span>
+                <span>reservation@goldcarsalbania.com</span>
               </li>
               <li className="flex items-center">
                 <i className="fas fa-clock mr-3"></i>
@@ -110,7 +103,7 @@ export default function Footer() {
             reserved.
           </p>
           <div className="mt-4 md:mt-0 flex flex-wrap gap-4 text-sm text-neutral-400">
-            <Link href="#faq">
+            <Link href="/#faq">
               <span className="hover:text-white transition-colors duration-300">
                 Customer Support
               </span>

@@ -7,27 +7,14 @@ import { Button } from "@/components/ui/button";
 import { FaFilter } from "react-icons/fa";
 
 interface CarFiltersProps {
-  onFilterChange: (filters: Record<string, any>) => void;
-  location: string;
+  onFilterChange: (filters: Filters) => void;
 }
 
-export default function CarFilters({
-  onFilterChange,
-  location,
-}: CarFiltersProps) {
+export default function CarFilters({ onFilterChange }: CarFiltersProps) {
   const [transmissionType, setTransmissionType] = useState<string>(null);
-  const [locationFilter, setLocationFilter] = useState<string>(location);
   const [priceRange, setPriceRange] = useState([0, 200]);
   const [passengerCapacity, setPassengerCapacity] = useState<string>(null);
   const [fuelType, setFuelType] = useState<string>(null);
-
-  const handleLocationChange = (value: string) => {
-    if (value === locationFilter) {
-      setLocationFilter(null);
-    } else {
-      setLocationFilter(value);
-    }
-  };
 
   const handleTransmissionChange = (value: string) => {
     if (value === transmissionType) {
@@ -54,14 +41,13 @@ export default function CarFilters({
   };
 
   const applyFilters = () => {
-    const filters: Record<string, any> = {};
-
-    filters.location = locationFilter;
-    filters.transmission = transmissionType;
-    filters.minPrice = priceRange[0];
-    filters.maxPrice = priceRange[1];
-    filters.seats = passengerCapacity;
-    filters.fuelType = fuelType;
+    const filters: Filters = {
+      transmission: transmissionType,
+      minPrice: priceRange[0],
+      maxPrice: priceRange[1],
+      seats: passengerCapacity,
+      fuelType: fuelType,
+    };
 
     onFilterChange(filters);
   };

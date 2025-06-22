@@ -14,6 +14,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const searchSchema = z.object({
   pickupDate: z.string().min(1, { message: "Please select a pickup date" }),
@@ -48,6 +49,12 @@ export default function BookingForm() {
 
   const onSubmit = (values: SearchFormValues) => {
     // Navigate to cars page with search parameters
+    if (values.pickupDate >= values.returnDate) {
+      toast("Pickup Date cannot be bigger than return date", {
+        description: "Please provide correct dates to complete the booking.",
+      });
+      return;
+    }
     router.push(
       `/cars?start=${values.pickupDate}&end=${values.returnDate}`,
       // `/cars?pickup=${values.pickupLocation}&start=${values.pickupDate}&end=${values.returnDate}`,

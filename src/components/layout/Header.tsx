@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -32,10 +33,12 @@ export default function Header() {
             <div className="flex-shrink-0">
               <Link href="/">
                 <div className="flex items-center cursor-pointer hover:scale-95 transition-all duration-300">
-                  <img
+                  <Image
                     src="/car-rental-icon.png"
                     alt="Car"
-                    className="h-15 object-contain"
+                    width={70}
+                    height={30}
+                    className="object-contain"
                   />
                   <span className="text-xl font-bold text-gold">
                     Gold Car Rent
@@ -109,42 +112,20 @@ export default function Header() {
       {isMenuOpen && (
         <div className="md:hidden bg-gray-900 border-t border-gray-800">
           <div className="pt-2 pb-3 space-y-1">
-            <Link href="/">
-              <span
-                className={`${
-                  isActive("/")
-                    ? "bg-gray-800 text-white"
-                    : "text-gray-400 hover:bg-gray-800 hover:text-white"
-                } block pl-3 pr-4 py-2 text-base font-medium transition-colors duration-300`}
-                onClick={closeMenu}
-              >
-                Home
-              </span>
-            </Link>
-            <Link href="/cars">
-              <span
-                className={`${
-                  isActive("/cars")
-                    ? "bg-gray-800 text-white"
-                    : "text-gray-400 hover:bg-gray-800 hover:text-white"
-                } block pl-3 pr-4 py-2 text-base font-medium transition-colors duration-300`}
-                onClick={closeMenu}
-              >
-                Cars
-              </span>
-            </Link>
-            <Link href="/locations">
-              <span
-                className={`${
-                  isActive("/locations")
-                    ? "bg-gray-800 text-white"
-                    : "text-gray-400 hover:bg-gray-800 hover:text-white"
-                } block pl-3 pr-4 py-2 text-base font-medium transition-colors duration-300`}
-                onClick={closeMenu}
-              >
-                Locations
-              </span>
-            </Link>
+            {navItems.map((item) => (
+              <Link href={item.path} key={item.path}>
+                <span
+                  className={`${
+                    isActive(item.path)
+                      ? "bg-gray-800 text-white"
+                      : "text-gray-400 hover:bg-gray-800 hover:text-white"
+                  } block pl-3 pr-4 py-2 text-base font-medium transition-colors duration-300`}
+                  onClick={closeMenu}
+                >
+                  {item.name}
+                </span>
+              </Link>
+            ))}
           </div>
         </div>
       )}

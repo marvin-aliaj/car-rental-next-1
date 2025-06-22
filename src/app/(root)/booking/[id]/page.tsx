@@ -12,7 +12,12 @@ import { Input } from "@/components/ui/input";
 import { useStore } from "@/store/useStore";
 import { Skeleton } from "@/components/ui/skeleton";
 import { createBooking } from "@/lib/actions/rental.actions";
-import { locations } from "@/lib/utils";
+import {
+  decryptId,
+  locations,
+  validateEmail,
+  validateGeneralPhone,
+} from "@/lib/utils";
 import {
   Select,
   SelectContent,
@@ -20,13 +25,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export default function Booking() {
   const cars = useStore((state) => state.cars);
   const [car, setCar] = useState<Car | null>(null);
   const [searchParams, setSearchParams] = useState(null);
   const params = useParams();
-  const carId = params.id;
+  const carId = decryptId(params.id);
   const router = useRouter();
 
   const initialLocationId = searchParams?.get("locationId");
@@ -53,6 +59,7 @@ export default function Booking() {
     fullName: "",
     email: "",
     phone: "",
+    confirm: false,
   });
 
   useEffect(() => {
@@ -85,10 +92,33 @@ export default function Booking() {
       return;
     }
 
-    if (!customerInfo.fullName || !customerInfo.email) {
+    if (!customerInfo.fullName || !customerInfo.email || !customerInfo.phone) {
       toast("Customer information required", {
         description:
           "Please provide your contact information to complete the booking.",
+      });
+      return;
+    }
+
+    if (!validateEmail(customerInfo.email)) {
+      toast("Correct email required", {
+        description:
+          "Please provide your correct email to complete the booking.",
+      });
+      return;
+    }
+
+    if (!validateGeneralPhone(customerInfo.phone)) {
+      toast("Correct phone number required", {
+        description:
+          "Please provide your correct phone number to complete the booking.",
+      });
+      return;
+    }
+
+    if (!customerInfo.confirm) {
+      toast("Driving license required", {
+        description: "You cannot book a rental car without a driving license.",
       });
       return;
     }
@@ -105,9 +135,14 @@ export default function Booking() {
       customerEmail: customerInfo.email,
       customerPhone: customerInfo.phone,
       location: selectedLocationId,
-      carId: carId,
-      startDate: format(dateRange.from, "yyyy-MM-dd"),
-      endDate: format(dateRange.to, "yyyy-MM-dd"),
+      car: {
+        id: carId,
+        brand: car.brand,
+        model: car.model,
+        year: car.year,
+      },
+      startDate: format(dateRange.from, "yyyy-MM-dd HH:mm:ss"),
+      endDate: format(dateRange.to, "yyyy-MM-dd HH:mm:ss"),
       calculatedPrice: totalPrice * 100, // Convert to string as required by the schema
       status: "PENDING",
     };
@@ -118,7 +153,9 @@ export default function Booking() {
         router.push(`/cars`);
       })
       .catch((e) => {
-        toast.error(e.message);
+        toast.error(
+          e.message.includes("available") ? e.message : "An Error Occurred",
+        );
       });
   };
 
@@ -249,7 +286,7 @@ export default function Booking() {
                         Email <span className="text-red-500">*</span>
                       </label>
                       <Input
-                        type="email"
+                        type={"email"}
                         placeholder="john@example.com"
                         value={customerInfo.email}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -263,7 +300,7 @@ export default function Booking() {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-neutral-700 mb-1">
-                        Phone Number
+                        Phone Number <span className="text-red-500">*</span>
                       </label>
                       <Input
                         placeholder="+1 (555) 123-4567"
@@ -274,7 +311,25 @@ export default function Booking() {
                             phone: e.target.value,
                           })
                         }
+                        required
                       />
+                    </div>
+                    <div className="flex gap-2 align-items-center">
+                      <Checkbox
+                        checked={customerInfo.confirm}
+                        onCheckedChange={(checked: boolean) =>
+                          setCustomerInfo({
+                            ...customerInfo,
+                            confirm: checked,
+                          })
+                        }
+                        required
+                      />
+
+                      <label className="block text-sm font-medium text-neutral-700 mb-1">
+                        I confirm that I possess a valid driving license
+                        <span className="text-red-500">*</span>
+                      </label>
                     </div>
                   </div>
                 </CardContent>
