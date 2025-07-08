@@ -41,7 +41,6 @@ export default function BookingConfirmation({
             <h4 className="font-medium text-neutral-900">
               {car?.brand} {car?.model}
             </h4>
-            <p className="text-neutral-600">{car?.category}</p>
           </div>
 
           <div className="space-y-4 mb-6">
@@ -50,7 +49,7 @@ export default function BookingConfirmation({
                 <p className="text-sm text-neutral-500">Pick-up</p>
                 <p className="font-medium text-neutral-800">
                   {dateRange.from
-                    ? format(dateRange.from, "EEE, MMM d, yyyy")
+                    ? format(dateRange.from, "EEE, MMM d, yyyy, HH:mm")
                     : ""}
                 </p>
               </div>
@@ -66,7 +65,9 @@ export default function BookingConfirmation({
               <div>
                 <p className="text-sm text-neutral-500">Return</p>
                 <p className="font-medium text-neutral-800">
-                  {dateRange.to ? format(dateRange.to, "EEE, MMM d, yyyy") : ""}
+                  {dateRange.to
+                    ? format(dateRange.to, "EEE, MMM d, yyyy, HH:mm")
+                    : ""}
                 </p>
               </div>
               <div className="text-right">
@@ -85,18 +86,18 @@ export default function BookingConfirmation({
                 {car?.pricePerDay}/day)
               </p>
               <p className="font-medium text-neutral-800">
-                ${basePrice.toFixed(2)}
+                €{basePrice.toFixed(2)}
               </p>
             </div>
             <div className="flex justify-between mb-4">
               <p className="text-neutral-600">Taxes & Fees</p>
               <p className="font-medium text-neutral-800">
-                ${taxes.toFixed(2)}
+                €{taxes.toFixed(2)}
               </p>
             </div>
             <div className="flex justify-between text-lg font-bold">
               <p className="text-neutral-900">Total</p>
-              <p className="text-primary">${totalPrice.toFixed(2)}</p>
+              <p className="text-primary">€{totalPrice.toFixed(2)}</p>
             </div>
           </div>
         </>

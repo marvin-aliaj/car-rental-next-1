@@ -31,7 +31,7 @@ export default function WhyChooseUs() {
       icon: faMapMarkerAlt,
       title: "Convenient Locations",
       description:
-        "Multiple pickup and drop-off locations throughout the city.",
+        "Located directly at the airport, our service ensures fast pick-up and drop-off with no hassle.",
     },
   ];
 
@@ -43,8 +43,15 @@ export default function WhyChooseUs() {
             Why Choose Gold Car Rental
           </h2>
           <p className="mt-4 text-neutral-600 max-w-2xl mx-auto">
-            We provide exceptional service and top-quality vehicles to ensure
-            your travel experience is smooth and enjoyable.
+            🚗 We offer a wide selection of well-maintained, automatic
+            transmission vehicles, perfect for business trips, vacations, or
+            everyday travel.
+            <br />
+            📍Located directly at the airport, our service ensures fast pick-up
+            and drop-off with no hassle. Choose from compact cars, SUVs, or
+            premium models – all clean, comfortable, and fuel-efficient. <br />
+            With competitive prices, 24/7 customer support, and flexible rental
+            terms, we make your travel easy and stress-free.
           </p>
         </div>
 

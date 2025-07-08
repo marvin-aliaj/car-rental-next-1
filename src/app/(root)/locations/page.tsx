@@ -4,6 +4,7 @@ import { Car, Clock, MapPin, Phone } from "lucide-react";
 import * as React from "react";
 import { Button } from "@/components/ui/button";
 import Map from "@/components/map";
+import Link from "next/link";
 // import pic from '../../../../public/tirana1.jpg';
 const LocationsPage = () => {
   const locations = [
@@ -12,7 +13,7 @@ const LocationsPage = () => {
       name: "Mother Teresa Airport (TIA)",
       address: "Rinas, Tirana 1504, Albania",
       hours: "Open 24/7",
-      phone: "+355 4 238 1600",
+      phone: "+355 68 409 3623",
       image: "/tia1.jpg",
       perks: [
         "Airport pickup/dropoff",
@@ -25,7 +26,7 @@ const LocationsPage = () => {
       name: "Durrës City Center",
       address: "Sheshi Liria, Durrës 2001, Albania",
       hours: "Mon-Sun: 6:00 AM - 11:00 PM",
-      phone: "+355 52 238 1600",
+      phone: "+355 68 409 3623",
       image: "/durres1.jpg",
       perks: ["Downtown location", "Beach proximity", "Long-term discounts"],
     },
@@ -111,17 +112,19 @@ const LocationsPage = () => {
                     ))}
                   </ul>
                 </div>
-
-                {/* CTA */}
-                <div className="mt-6">
-                  <Button className="w-full bg-primary hover:cursor-pointer">
-                    Book at this location
-                  </Button>
-                </div>
               </div>
             </div>
           ))}
         </div>
+
+        {/* CTA */}
+        <Link href="/cars">
+          <div className="flex justify-center mt-6">
+            <Button className="bg-primary hover:cursor-pointer">
+              Book now
+            </Button>
+          </div>
+        </Link>
 
         {/* Map Section */}
         <div className="mt-16 bg-white rounded-xl shadow-sm overflow-hidden">

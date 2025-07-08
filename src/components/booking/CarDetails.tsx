@@ -65,7 +65,7 @@ export default function CarDetails({ car }: CarDetailsProps) {
               <div className="mt-4 md:mt-0 md:ml-6 flex flex-col items-end">
                 <div className="text-right">
                   <span className="text-2xl font-bold text-primary">
-                    ${car.pricePerDay}
+                    €{car.pricePerDay}
                   </span>
                   <span className="text-sm text-neutral-500">/day</span>
                 </div>
